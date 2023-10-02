@@ -6,7 +6,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.RBACConstant;
+import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.utils.JwtUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.io.IOException;
  * Author SKY 2023/9/19
  */
 @Component
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -36,14 +39,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt=null;
 
         if(StringUtils.hasText(token) && token.startsWith(RBACConstant.AUTH_TOKEN)) {
-            jwt=token.substring(RBACConstant.AUTH_TOKEN.length()+1);
+            jwt= token.substring(RBACConstant.AUTH_TOKEN.length());
         }
         if (jwt!=null && JwtUtils.validateJwt(jwt)) {
+            log.info("JWT校验：{}", jwt);
             Claims claims = JwtUtils.parseJWT(jwt);
             String username = claims.get(RBACConstant.USER_NAME, String.class);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            //将当前登录的用户的id保存到ThreadLocal中
+            Long userId = claims.get(RBACConstant.USER_ID, Long.class);
+            log.info("当前登录的用户id：{}", userId);
+            BaseContext.setCurrentId(userId);
 
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             //只有在JWT令牌存在且有效时,才授予相应的的权限
             if (userDetails != null) {
                 UsernamePasswordAuthenticationToken authentication =

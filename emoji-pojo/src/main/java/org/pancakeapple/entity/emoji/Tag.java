@@ -5,20 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
- * 表情包实体类
+ * 表情包标签实体类
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Emoji {
+@Builder
+public class Tag {
     private Long id;
     private String name;
-    private String description;
-    private String url;
-    private Long author;
-    private LocalDateTime uploadTime;
 }

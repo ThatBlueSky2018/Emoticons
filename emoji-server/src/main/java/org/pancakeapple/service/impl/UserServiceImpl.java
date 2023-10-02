@@ -4,9 +4,9 @@ import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.constant.RBACConstant;
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
-import org.pancakeapple.mapper.RoleMapper;
-import org.pancakeapple.mapper.UserMapper;
-import org.pancakeapple.mapper.UserRoleMapper;
+import org.pancakeapple.mapper.user.RoleMapper;
+import org.pancakeapple.mapper.user.UserMapper;
+import org.pancakeapple.mapper.user.UserRoleMapper;
 import org.pancakeapple.entity.user.Role;
 import org.pancakeapple.entity.user.User;
 import org.pancakeapple.entity.user.UserRole;
@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * 用户登录
+     * @param loginDTO 登录信息
+     * @return 登录返回的数据
+     */
     @Override
     public LoginVO login(LoginDTO loginDTO) {
         //这一步可能会抛出异常，交给Controller层处理
@@ -79,6 +85,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /**
+     * 用户注册
+     * @param registerDTO 注册信息
+     * @return 注册之后返回的数据
+     */
     @Override
     public RegisterVO register(RegisterDTO registerDTO) {
         //用户名已经存在的情况
@@ -93,10 +104,11 @@ public class UserServiceImpl implements UserService {
         User newUser = User.builder()
                 .username(registerDTO.getUsername())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .registerTime(LocalDateTime.now())
                 .roles(roleList)
                 .build();
         newUser.setRoles(roleList);
-        userMapper.add(newUser);
+        userMapper.addUser(newUser);
 
         //查询回显,维护多对多关系中间表
         userRoleMapper.insert(newUser.getId(), role.getId());

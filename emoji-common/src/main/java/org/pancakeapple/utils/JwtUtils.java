@@ -2,6 +2,7 @@ package org.pancakeapple.utils;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.pancakeapple.constant.RBACConstant;
 
 import java.util.Date;
 import java.util.Map;
@@ -9,9 +10,9 @@ import java.util.Map;
 @Slf4j
 public class JwtUtils {
 
-    private static final String signKey="emojiPlatform";
+    private static final String signKey= RBACConstant.JWT_SIGN_KEY;
 
-    private static final Long expire=43200000L;
+    private static final Long expire=RBACConstant.JWT_EXPIRE;
 
     /**
      * 生成JWT令牌
@@ -43,20 +44,15 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(signKey).parseClaimsJws(jwt);
             return true;
         } catch (SignatureException e) {
-            log.info("Invalid JWT signature.");
-            log.trace("Invalid JWT signature trace:{}", e.toString());
+            log.info("无效的JWT标签");
         } catch (MalformedJwtException e) {
-            log.info("Invalid JWT token.");
-            log.trace("Invalid JWT token trace: {}", e.toString());
+            log.info("无效的JWT令牌");
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
-            log.trace("Expired JWT token trace: {}", e.toString());
+            log.info("过期的JWT令牌");
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT token.");
-            log.trace("Unsupported JWT token trace: {}", e.toString());
+            log.info("不支持的JWT令牌");
         } catch (IllegalArgumentException e) {
-            log.info("JWT token compact of handler are invalid.");
-            log.trace("JWT token compact of handler are invalid trace: {}", e.toString());
+            log.info("处理程序的JWT令牌压缩无效");
         }
         return false;
     }

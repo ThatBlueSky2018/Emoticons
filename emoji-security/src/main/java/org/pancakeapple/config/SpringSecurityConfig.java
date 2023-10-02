@@ -1,5 +1,6 @@
 package org.pancakeapple.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.filter.JwtAuthenticationFilter;
 import org.pancakeapple.security.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.Collections;
  * Author SKY 2023/9/19
  */
 @Configuration
+@Slf4j
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
@@ -55,11 +57,13 @@ public class SpringSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->{
-                auth.requestMatchers("/api/login").permitAll();
-                auth.requestMatchers("/api/register").permitAll();
+                auth.requestMatchers("/user/login").permitAll();
+                auth.requestMatchers("/user/register").permitAll();
 
-                auth.requestMatchers("/api/user").hasAuthority("USER");
-                auth.requestMatchers("/api/admin").hasAuthority("ADMIN");
+                auth.requestMatchers("/user/user").hasAuthority("USER");
+                auth.requestMatchers("/user/admin").hasAuthority("ADMIN");
+
+                auth.requestMatchers("/tag","/tag/**").hasAuthority("ADMIN");
 
                 auth.requestMatchers("/doc.html","/webjars/**","/img.icons/**",
                         "/swagger-resources/**","/**","/v3/api-docs").permitAll();
@@ -71,11 +75,15 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception
-    { return authenticationConfiguration.getAuthenticationManager();}
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        log.info("配置认证管理器...");
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    { return new BCryptPasswordEncoder(); }
+    public PasswordEncoder passwordEncoder() {
+        log.info("配置密码编码器...");
+        return new BCryptPasswordEncoder();
+    }
 
 }
