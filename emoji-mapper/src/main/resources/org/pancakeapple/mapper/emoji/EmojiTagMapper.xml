@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.pancakeapple.mapper.emoji.EmojiTagMapper">
+    <insert id="insertBatch">
+        insert into emoji_tag(emoji_id, tag_id)
+        values
+        <foreach collection="emojiTags" item="emojiTag" separator=",">
+            (#{emojiTag.emojiId},#{emojiTag.tagId})
+        </foreach>
+    </insert>
+</mapper>

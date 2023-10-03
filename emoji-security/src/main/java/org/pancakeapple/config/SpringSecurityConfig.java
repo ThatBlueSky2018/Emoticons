@@ -1,6 +1,7 @@
 package org.pancakeapple.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.pancakeapple.constant.RBACConstant;
 import org.pancakeapple.filter.JwtAuthenticationFilter;
 import org.pancakeapple.security.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class SpringSecurityConfig {
     private CustomerUserDetailsService customerUserDetailsService ;
 
     //CORS跨域请求配置
-    private CorsConfigurationSource corsConfigSource() {
+    @Bean
+    public CorsConfigurationSource corsConfigSource() {
+        log.info("配置CORS跨域请求...");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowedOrigins(Collections.singletonList("*"));
@@ -52,7 +55,9 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception
-    { http
+    {
+        log.info("配置Spring Security过滤器链...");
+        http
             .cors(cors->cors.configurationSource(corsConfigSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -60,12 +65,14 @@ public class SpringSecurityConfig {
                 auth.requestMatchers("/user/login").permitAll();
                 auth.requestMatchers("/user/register").permitAll();
 
-                auth.requestMatchers("/user/user").hasAuthority("USER");
-                auth.requestMatchers("/user/admin").hasAuthority("ADMIN");
+                auth.requestMatchers("/user/user").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers("/user/admin").hasAuthority(RBACConstant.ADMIN_ROLE);
 
-                auth.requestMatchers("/tag","/tag/**").hasAuthority("ADMIN");
+                auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
 
-                auth.requestMatchers("/doc.html","/webjars/**","/img.icons/**",
+                auth.requestMatchers("/common/**").hasAuthority(RBACConstant.USER_ROLE);
+
+                auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",
                         "/swagger-resources/**","/**","/v3/api-docs").permitAll();
             })
             .httpBasic(Customizer.withDefaults());

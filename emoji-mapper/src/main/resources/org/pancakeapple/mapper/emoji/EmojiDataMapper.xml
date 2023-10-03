@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.pancakeapple.mapper.emoji.EmojiDataMapper">
+    <insert id="insert">
+        insert into emoji_data(emoji_id, hits, downloads, favorite)
+        values (#{emojiId},#{hits},#{downloads},#{favorite})
+    </insert>
+</mapper>

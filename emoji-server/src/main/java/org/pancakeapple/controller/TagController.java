@@ -45,7 +45,7 @@ public class TagController {
         log.info("新增表情包标签：{}",addTagDTO);
         try {
             tagService.addTag(addTagDTO);
-            return Result.success("添加成功!");
+            return Result.success(MessageConstant.ADD_SUCCESS);
         }catch (TagExistException e) {
             return Result.error(e.getMessage());
         }

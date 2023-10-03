@@ -1,6 +1,9 @@
 package org.pancakeapple.constant;
 
 public class RBACConstant {
+    //两种角色
+    public static final String USER_ROLE="USER";
+    public static final String ADMIN_ROLE="ADMIN";
     //请求认证
     public static final String AUTH_HEADER ="Authorization";
     public static final String AUTH_TOKEN="Token ";

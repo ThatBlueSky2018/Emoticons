@@ -9,6 +9,7 @@ import org.pancakeapple.mapper.emoji.TagMapper;
 import org.pancakeapple.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class TagServiceImpl implements TagService {
      * @param id 标签id
      */
     @Override
+    @Transactional
     public void deleteById(Long id) {
         emojiTagMapper.deleteByTagId(id);
         tagMapper.deleteById(id);
