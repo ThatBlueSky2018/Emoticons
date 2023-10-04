@@ -15,6 +15,7 @@ import org.pancakeapple.mapper.emoji.EmojiMapper;
 import org.pancakeapple.mapper.emoji.EmojiTagMapper;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.EmojiService;
+import org.pancakeapple.vo.emoji.EmojiDetailVO;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,16 @@ public class EmojiServiceImpl implements EmojiService {
         PageHelper.startPage(emojiPageQueryDTO.getPage(),emojiPageQueryDTO.getPageSize());
         Page<EmojiGeneralVO> page=emojiMapper.pageQuery();
         return new PageBean(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 根据id查询表情包详细信息
+     *
+     * @param id 主键id
+     * @return 详细信息
+     */
+    @Override
+    public EmojiDetailVO getById(Long id) {
+        return emojiMapper.getById(id);
     }
 }

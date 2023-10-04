@@ -3,6 +3,7 @@ package org.pancakeapple.service;
 import org.pancakeapple.dto.emoji.EmojiDTO;
 import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.result.PageBean;
+import org.pancakeapple.vo.emoji.EmojiDetailVO;
 
 public interface EmojiService {
     /**
@@ -17,4 +18,11 @@ public interface EmojiService {
      * @return 总记录数以及当前页记录列表
      */
     PageBean pageQuery(EmojiPageQueryDTO emojiPageQueryDTO);
+
+    /**
+     * 根据id查询表情包详细信息
+     * @param id 主键id
+     * @return 详细信息
+     */
+    EmojiDetailVO getById(Long id);
 }

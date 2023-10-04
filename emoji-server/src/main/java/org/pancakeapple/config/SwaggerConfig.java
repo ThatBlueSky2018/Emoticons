@@ -19,9 +19,9 @@ public class SwaggerConfig {
                         .title("Emoticons表情包资源共享平台接口文档")
                         .version("1.0")
                         .description( "用于快速实现前后端联调")
-                        .termsOfService("http://doc.xiaominfo.com")
+                        .termsOfService("https://doc.xiaominfo.com")
                         .license(new License().name("Apache 2.0")
-                                .url("http://doc.xiaominfo.com")));
+                                .url("https://doc.xiaominfo.com")));
     }
 
 

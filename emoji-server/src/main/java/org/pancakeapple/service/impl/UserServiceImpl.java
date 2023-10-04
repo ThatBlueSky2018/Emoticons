@@ -14,6 +14,7 @@ import org.pancakeapple.service.UserService;
 import org.pancakeapple.utils.JwtUtils;
 import org.pancakeapple.vo.user.LoginVO;
 import org.pancakeapple.vo.user.RegisterVO;
+import org.pancakeapple.vo.user.UserInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -115,6 +116,17 @@ public class UserServiceImpl implements UserService {
         //查询回显,维护多对多关系中间表
         userRoleMapper.insert(newUser.getId(), role.getId());
         return RegisterVO.builder().msg(MessageConstant.REGISTER_SUCCESS).build();
+    }
+
+    /**
+     * 根据id查询用户信息
+     *
+     * @param id 主键id
+     * @return 用户信息
+     */
+    @Override
+    public UserInfoVO getById(Long id) {
+        return userMapper.getById(id);
     }
 
 }

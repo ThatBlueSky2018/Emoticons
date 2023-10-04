@@ -10,6 +10,7 @@ import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.EmojiService;
+import org.pancakeapple.vo.emoji.EmojiDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +48,22 @@ public class EmojiController {
     @Operation(summary = "表情包信息分页查询")
     @ApiOperationSupport(author = "3010796910sky@gmail.com")
     public Result<PageBean> pageQuery(EmojiPageQueryDTO emojiPageQueryDTO) {
-        log.info("表情包分页查询：{}",emojiPageQueryDTO);
-        PageBean pageBean=emojiService.pageQuery(emojiPageQueryDTO);
+        log.info("表情包分页查询：{}", emojiPageQueryDTO);
+        PageBean pageBean = emojiService.pageQuery(emojiPageQueryDTO);
         return Result.success(pageBean);
+    }
+
+    /**
+     * 根据id查询表情包详细信息
+     * @param id 主键id
+     * @return 表情包信息
+     */
+    @GetMapping("/{id}")
+    @Operation(summary = "根据id获取表情包详细信息")
+    @ApiOperationSupport(author = "3010796910sky@gmail.com")
+    public Result<EmojiDetailVO> getById(@PathVariable Long id) {
+        log.info("根据id查询表情包详细信息：{}",id);
+        EmojiDetailVO emojiDetailVO=emojiService.getById(id);
+        return Result.success(emojiDetailVO);
     }
 }

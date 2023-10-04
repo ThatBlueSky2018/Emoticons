@@ -2,12 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.pancakeapple.mapper.emoji.EmojiMapper">
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_emoji (name, description, url, author, upload_time)
-        values (#{name},#{description},#{url},#{author},#{uploadTime})
-    </insert>
-
     <select id="pageQuery" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
-        select te.id,te.name,te.url,te.author,tu.profile_photo from tb_emoji te left outer join tb_user tu on te.author = tu.id
+        select te.id,te.name,te.url,te.author,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu
+        on te.author = tu.id
+    </select>
+    <select id="getById" resultType="org.pancakeapple.vo.emoji.EmojiDetailVO">
+        select te.*,ed.hits,ed.downloads,ed.favorite
+        from tb_emoji te left outer join emoji_data ed
+        on te.id = ed.emoji_id
+        where te.id=#{id}
     </select>
 </mapper>

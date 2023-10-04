@@ -4,6 +4,7 @@ import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
 import org.pancakeapple.vo.user.LoginVO;
 import org.pancakeapple.vo.user.RegisterVO;
+import org.pancakeapple.vo.user.UserInfoVO;
 
 public interface UserService {
     /**
@@ -19,4 +20,11 @@ public interface UserService {
      * @return 注册之后返回的数据
      */
     RegisterVO register (RegisterDTO registerDTO);
+
+    /**
+     * 根据id查询用户信息
+     * @param id 主键id
+     * @return 用户信息
+     */
+    UserInfoVO getById(Long id);
 }
