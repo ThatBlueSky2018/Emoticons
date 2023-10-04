@@ -4,6 +4,8 @@ import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.constant.RBACConstant;
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
+import org.pancakeapple.dto.user.UserInfoDTO;
+import org.pancakeapple.exception.UserNameExistException;
 import org.pancakeapple.mapper.user.RoleMapper;
 import org.pancakeapple.mapper.user.UserMapper;
 import org.pancakeapple.mapper.user.UserRoleMapper;
@@ -15,6 +17,7 @@ import org.pancakeapple.utils.JwtUtils;
 import org.pancakeapple.vo.user.LoginVO;
 import org.pancakeapple.vo.user.RegisterVO;
 import org.pancakeapple.vo.user.UserInfoVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
     public RegisterVO register(RegisterDTO registerDTO) {
         //用户名已经存在的情况
         if(userMapper.findUserByUsername(registerDTO.getUsername())!=null) {
-            return RegisterVO.builder().msg(MessageConstant.ACCOUNT_EXIST).build();
+            throw new UserNameExistException(MessageConstant.ACCOUNT_EXIST);
         }
         //默认角色是USER
         Role role = roleMapper.findRoleByRoleName(RBACConstant.DEFAULT_ROLE);
@@ -127,6 +127,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoVO getById(Long id) {
         return userMapper.getById(id);
+    }
+
+    /**
+     * 修改用户信息
+     * @param userInfoDTO 用户信息封装
+     */
+    @Override
+    public void update(UserInfoDTO userInfoDTO) {
+        //查看是否修改了用户名
+        UserInfoVO userInfo = userMapper.getById(userInfoDTO.getId());
+        if(!Objects.equals(userInfo.getUsername(), userInfoDTO.getUsername())) {
+            if(userMapper.findUserByUsername(userInfoDTO.getUsername())!=null) {
+                throw new UserNameExistException(MessageConstant.ACCOUNT_EXIST);
+            }
+        }
+
+        //拷贝用户信息，进行修改
+        User user=new User();
+        BeanUtils.copyProperties(userInfoDTO, user);
+        userMapper.update(user);
     }
 
 }

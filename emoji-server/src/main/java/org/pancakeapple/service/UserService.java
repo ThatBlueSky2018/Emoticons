@@ -2,6 +2,7 @@ package org.pancakeapple.service;
 
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
+import org.pancakeapple.dto.user.UserInfoDTO;
 import org.pancakeapple.vo.user.LoginVO;
 import org.pancakeapple.vo.user.RegisterVO;
 import org.pancakeapple.vo.user.UserInfoVO;
@@ -27,4 +28,10 @@ public interface UserService {
      * @return 用户信息
      */
     UserInfoVO getById(Long id);
+
+    /**
+     * 修改用户信息
+     * @param userInfoDTO 用户信息封装
+     */
+    void update(UserInfoDTO userInfoDTO);
 }

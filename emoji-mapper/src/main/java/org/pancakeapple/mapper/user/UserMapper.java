@@ -32,4 +32,10 @@ public interface UserMapper {
      */
     @Select("select id,username,profile_photo,register_time from tb_user where id=#{id}")
     UserInfoVO getById(Long id);
+
+    /**
+     * 修改用户信息
+     * @param user 用户信息
+     */
+    void update(User user);
 }

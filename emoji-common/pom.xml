@@ -11,6 +11,7 @@
 
     <artifactId>emoji-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>emoji-common</name>
     <description>The module of common class</description>
     <properties>
@@ -36,14 +37,5 @@
             <version>3.17.0</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

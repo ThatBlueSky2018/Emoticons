@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
+import org.pancakeapple.dto.user.UserInfoDTO;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.UserService;
 import org.pancakeapple.vo.user.LoginVO;
@@ -69,6 +70,19 @@ public class UserController {
         log.info("根据id获取用户信息：{}",id);
         UserInfoVO userInfoVO=userService.getById(id);
         return Result.success(userInfoVO);
+    }
+
+    /**
+     * 修改用户信息
+     * @param userInfoDTO 用户信息封装
+     * @return 提示信息
+     */
+    @PutMapping
+    @Operation(summary = "用户修改信息")
+    public Result<String> update(@RequestBody UserInfoDTO userInfoDTO) {
+        log.info("修改用户信息，{}",userInfoDTO);
+        userService.update(userInfoDTO);
+        return Result.success(MessageConstant.UPDATE_SUCCESS);
     }
 
     @GetMapping("/user")
