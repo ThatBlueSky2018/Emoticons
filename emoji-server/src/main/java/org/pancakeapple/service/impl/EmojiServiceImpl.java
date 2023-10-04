@@ -1,8 +1,11 @@
 package org.pancakeapple.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.pancakeapple.constant.DataConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.emoji.EmojiDTO;
+import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.entity.emoji.Emoji;
 import org.pancakeapple.entity.emoji.EmojiData;
 import org.pancakeapple.entity.emoji.EmojiTag;
@@ -10,7 +13,9 @@ import org.pancakeapple.entity.emoji.Tag;
 import org.pancakeapple.mapper.emoji.EmojiDataMapper;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
 import org.pancakeapple.mapper.emoji.EmojiTagMapper;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.EmojiService;
+import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,5 +75,17 @@ public class EmojiServiceImpl implements EmojiService {
             });
             emojiTagMapper.insertBatch(emojiTags);
         }
+    }
+
+    /**
+     * 表情包分页查询
+     * @param emojiPageQueryDTO 封装页码数以及每页记录数
+     * @return 总记录数以及当前页记录列表
+     */
+    @Override
+    public PageBean pageQuery(EmojiPageQueryDTO emojiPageQueryDTO) {
+        PageHelper.startPage(emojiPageQueryDTO.getPage(),emojiPageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page=emojiMapper.pageQuery();
+        return new PageBean(page.getTotal(),page.getResult());
     }
 }

@@ -6,4 +6,8 @@
         insert into tb_emoji (name, description, url, author, upload_time)
         values (#{name},#{description},#{url},#{author},#{uploadTime})
     </insert>
+
+    <select id="pageQuery" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.author,tu.profile_photo from tb_emoji te left outer join tb_user tu on te.author = tu.id
+    </select>
 </mapper>

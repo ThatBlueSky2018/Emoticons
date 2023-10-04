@@ -35,6 +35,7 @@
         <druid.version>1.2.16</druid.version>
         <jaxb.version>2.3.1</jaxb.version>
         <knife4j.version>4.3.0</knife4j.version>
+        <pagehelper.version>1.4.6</pagehelper.version>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,11 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
