@@ -64,12 +64,15 @@ public class SpringSecurityConfig {
             .authorizeHttpRequests(auth ->{
                 auth.requestMatchers("/user/login").permitAll();
                 auth.requestMatchers("/user/register").permitAll();
+                auth.requestMatchers("/user/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/user/user").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers("/user/admin").hasAuthority(RBACConstant.ADMIN_ROLE);
 
-                auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers("/tag").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers("/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
 
+                auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers("/common/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",
