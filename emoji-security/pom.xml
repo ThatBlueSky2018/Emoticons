@@ -29,12 +29,6 @@
         </dependency>
         <dependency>
             <groupId>org.pancakeapple</groupId>
-            <artifactId>emoji-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.pancakeapple</groupId>
             <artifactId>emoji-pojo</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

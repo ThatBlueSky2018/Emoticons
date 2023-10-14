@@ -40,7 +40,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
         User user = userMapper.findUserByUsername(username);
         if(user != null) {
             //确定用户的角色
-            List<UserRole> userRoles = userRoleMapper.findRolesByUser(user.getId());
+            List<UserRole> userRoles = userRoleMapper.findRolesByUserId(user.getId());
             List<Role> roleList = new ArrayList<>();
             userRoles.forEach(userRole -> {
                 Role role = roleMapper.findRoleById(userRole.getRoleId());

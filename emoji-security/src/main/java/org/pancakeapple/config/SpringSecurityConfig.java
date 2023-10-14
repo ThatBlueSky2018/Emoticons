@@ -62,12 +62,15 @@ public class SpringSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->{
+                //注意：配置在前面的先起到效果！
                 auth.requestMatchers("/user/login").permitAll();
                 auth.requestMatchers("/user/register").permitAll();
-                auth.requestMatchers("/user/**").hasAuthority(RBACConstant.USER_ROLE);
-
                 auth.requestMatchers("/user/user").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers("/user/admin").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers("/user/**").hasAuthority(RBACConstant.USER_ROLE);
+
+                auth.requestMatchers("/tagGroup/list").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers("/tagGroup", "/tagGroup/**").hasAuthority(RBACConstant.ADMIN_ROLE);
 
                 auth.requestMatchers("/tag").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers("/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);

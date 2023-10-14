@@ -8,7 +8,10 @@ import org.pancakeapple.dto.emoji.AddTagDTO;
 import org.pancakeapple.exception.TagExistException;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.TagService;
+import org.pancakeapple.vo.emoji.TagGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,12 +38,25 @@ public class TagController {
     }
 
     /**
+     * 根据分组id查询标签列表
+     * @param groupId 分组id
+     * @return 满足条件的标签列表
+     */
+    @GetMapping("/groupList")
+    @Cacheable(cacheNames = "tagGroup",key = "#groupId")
+    public Result<List<TagGeneralVO>> listByGroupId(Integer groupId) {
+        log.info("根据分组id查询标签：{}",groupId);
+        List<TagGeneralVO> list=tagService.listByGroupId(groupId);
+        return Result.success(list);
+    }
+    /**
      * 新增表情包标签
      * @param addTagDTO 标签信息
      * @return 是否添加成功的信息
      */
     @PostMapping
     @Operation(summary = "增加一个标签")
+    @CacheEvict(cacheNames = "tagGroup",key = "#addTagDTO.getGroupId()")
     public Result<String> addTag(@RequestBody AddTagDTO addTagDTO) {
         log.info("新增表情包标签：{}",addTagDTO);
         try {
@@ -58,6 +74,7 @@ public class TagController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "根据id删除标签")
+    @CacheEvict(cacheNames = "tagGroup", allEntries = true)
     public Result<String> deleteTag(@PathVariable Long id) {
         log.info("删除表情包标签，id为{}",id);
         tagService.deleteById(id);

@@ -8,16 +8,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * Emoji与Tag的多对多关系
+ * 标签分组表
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EmojiTag {
-    private Integer id;
-    private Long emojiId;  //表情包id
-    private Long tagId;  //标签id
+public class TagGroup {
+    private Long id;
+    private String name;
 
     private LocalDateTime createTime;
     private Long createUser;

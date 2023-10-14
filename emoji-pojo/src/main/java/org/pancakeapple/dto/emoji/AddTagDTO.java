@@ -12,4 +12,10 @@ import lombok.NoArgsConstructor;
 public class AddTagDTO {
     @Schema(description = "标签名",defaultValue = "搞笑",requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
+
+    @Schema(description = "标签描述",defaultValue = "xxx",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String description;
+
+    @Schema(description = "分组id",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer groupId;
 }

@@ -1,23 +1,21 @@
-package org.pancakeapple.entity.user;
+package org.pancakeapple.entity.interaction;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 /**
- * 角色实体类
+ * 用户收藏实体类
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Favorite {
     private Long id;
-    private String roleName;
+    private Long userId;
+    private Long emojiId;
 
     private LocalDateTime createTime;
-    private LocalDateTime updateTime;
 }

@@ -18,6 +18,9 @@ public class GlobalExceptionHandler {
     public Result<String> ex(Exception e) {
         log.info("捕获到全局异常：{}",e.toString());
         e.printStackTrace();
+        if(e.getMessage()!=null) {
+            return Result.error(e.getMessage());
+        }
         return Result.error(MessageConstant.GLOBAL_ERROR);
     }
 }

@@ -11,6 +11,8 @@ public class MessageConstant {
     public static final String UPDATE_SUCCESS="修改成功!";
     public static final String DELETE_SUCCESS="删除成功!";
 
+    public static final String TAG_GROUP_EXIST="标签分组已存在!";
+    public static final String TAG_GROUP_NOT_EXIST="标签分组不存在!";
     public static final String TAG_EXIST="该标签已经存在!";
 
     public static final String FILE_UPLOAD_FAILED="文件上传失败!";

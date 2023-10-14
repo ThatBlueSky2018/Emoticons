@@ -2,6 +2,7 @@ package org.pancakeapple.service.impl;
 
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.constant.RBACConstant;
+import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
 import org.pancakeapple.dto.user.UserInfoDTO;
@@ -64,9 +65,13 @@ public class UserServiceImpl implements UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User loginUser = userMapper.findUserByUsername(authentication.getName());
 
+        //更新上次登录时间
+        loginUser.setLastLogin(LocalDateTime.now());
+        userMapper.update(loginUser);
+
         //确定该用户的角色
         List<String> rolesNames = new ArrayList<>();
-        List<UserRole> userRoles = userRoleMapper.findRolesByUser(loginUser.getId());
+        List<UserRole> userRoles = userRoleMapper.findRolesByUserId(loginUser.getId());
         userRoles.forEach(userRole -> {
             Role role = roleMapper.findRoleById(userRole.getRoleId());
             rolesNames.add(role.getRoleName());
@@ -104,13 +109,15 @@ public class UserServiceImpl implements UserService {
         List<Role> roleList=new ArrayList<>();
         roleList.add(role);
 
+        //插入数据
         User newUser = User.builder()
                 .username(registerDTO.getUsername())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .registerTime(LocalDateTime.now())
+                .createTime(LocalDateTime.now())
                 .roles(roleList)
                 .build();
         newUser.setRoles(roleList);
+        newUser.setCreateTime(LocalDateTime.now());
         userMapper.addUser(newUser);
 
         //查询回显,维护多对多关系中间表
@@ -136,7 +143,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(UserInfoDTO userInfoDTO) {
         //查看是否修改了用户名
-        UserInfoVO userInfo = userMapper.getById(userInfoDTO.getId());
+        UserInfoVO userInfo = userMapper.getById(BaseContext.getCurrentId());
         if(!Objects.equals(userInfo.getUsername(), userInfoDTO.getUsername())) {
             if(userMapper.findUserByUsername(userInfoDTO.getUsername())!=null) {
                 throw new UserNameExistException(MessageConstant.ACCOUNT_EXIST);
@@ -146,6 +153,7 @@ public class UserServiceImpl implements UserService {
         //拷贝用户信息，进行修改
         User user=new User();
         BeanUtils.copyProperties(userInfoDTO, user);
+        user.setId(BaseContext.getCurrentId());
         userMapper.update(user);
     }
 

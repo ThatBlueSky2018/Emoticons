@@ -50,8 +50,8 @@ public class EmojiServiceImpl implements EmojiService {
         BeanUtils.copyProperties(emojiDTO,emoji);
 
         //1.向表情包信息表中插入一条数据
-        emoji.setAuthor(BaseContext.getCurrentId());
-        emoji.setUploadTime(LocalDateTime.now());
+        emoji.setCreateUser(BaseContext.getCurrentId());
+        emoji.setCreateTime(LocalDateTime.now());
         emojiMapper.insert(emoji);
 
         //2.向表情包数据表中插入一条数据

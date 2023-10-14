@@ -19,6 +19,16 @@ public class Emoji {
     private String name;
     private String description;
     private String url;
-    private Long author;
-    private LocalDateTime uploadTime;
+    private Long typeId;
+    private Integer hits;
+    private Integer downloads;
+    private Integer favorite;
+
+    private Integer status;  //是否通过审核
+
+    private LocalDateTime createTime;
+    private Long createUser;
+    private LocalDateTime updateTime;
+    private Long updateUser;
+
 }

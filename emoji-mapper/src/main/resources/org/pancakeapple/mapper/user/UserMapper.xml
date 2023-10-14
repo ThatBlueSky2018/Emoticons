@@ -6,11 +6,20 @@
     <update id="update">
         update tb_user
         <set>
+            <if test="email!=null">
+                email=#{email},
+            </if>
             <if test="username!=null">
                 username=#{username},
             </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
             <if test="profilePhoto!=null">
                 profile_photo=#{profilePhoto},
+            </if>
+            <if test="signature!=null">
+                signature=#{signature},
             </if>
         </set>
         where id=#{id}

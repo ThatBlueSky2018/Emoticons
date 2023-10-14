@@ -1,4 +1,4 @@
-package org.pancakeapple.entity.emoji;
+package org.pancakeapple.entity.interaction;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,16 +8,18 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * Emoji与Tag的多对多关系
+ * 表情包评论实体类
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EmojiTag {
-    private Integer id;
-    private Long emojiId;  //表情包id
-    private Long tagId;  //标签id
+public class Comment {
+    private Long id;
+    private Long replyId;  //楼主评论id
+    private Long replyReplyId; //回复评论id
+    private Long emojiId;
+    private String content;
 
     private LocalDateTime createTime;
     private Long createUser;
