@@ -50,7 +50,7 @@ public class TagGroupServiceImpl implements TagGroupService {
      */
     @Override
     @Transactional
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         //1.删除该分组下的所有标签
         tagMapper.deleteByGroupId(id);
 

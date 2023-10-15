@@ -31,5 +31,5 @@ public interface TagService {
      * @param groupId 分组id
      * @return 标签列表
      */
-    List<TagGeneralVO> listByGroupId(Integer groupId);
+    List<TagGeneralVO> listByGroupId(Long groupId);
 }

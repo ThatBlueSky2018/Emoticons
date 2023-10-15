@@ -1,6 +1,7 @@
 package org.pancakeapple.service.impl;
 
 import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.StatusConstant;
 import org.pancakeapple.dto.emoji.AddTagDTO;
 import org.pancakeapple.entity.emoji.Tag;
 import org.pancakeapple.entity.emoji.TagGroup;
@@ -11,6 +12,7 @@ import org.pancakeapple.mapper.emoji.TagGroupMapper;
 import org.pancakeapple.mapper.emoji.TagMapper;
 import org.pancakeapple.service.TagService;
 import org.pancakeapple.vo.emoji.TagGeneralVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +46,11 @@ public class TagServiceImpl implements TagService {
      * @return 标签列表
      */
     @Override
-    public List<TagGeneralVO> listByGroupId(Integer groupId) {
+    public List<TagGeneralVO> listByGroupId(Long groupId) {
+        TagGroup tagGroup = tagGroupMapper.getById(groupId);
+        if(tagGroup==null) {
+            throw new TagGroupNotExistException(MessageConstant.TAG_GROUP_NOT_EXIST);
+        }
         return tagMapper.getByGroupId(groupId);
     }
 
@@ -62,7 +68,11 @@ public class TagServiceImpl implements TagService {
 
         //2.保证标签名称不重复
         if(tagMapper.findByName(addTagDTO.getName())==null) {
-            tagMapper.insert(addTagDTO);
+            Tag tag = new Tag();
+            BeanUtils.copyProperties(addTagDTO, tag);
+            tag.setRefCount(0L);
+            tag.setStatus(StatusConstant.ABLE);
+            tagMapper.insert(tag);
         }
         else {
             throw new TagExistException(MessageConstant.TAG_EXIST);

@@ -39,7 +39,7 @@ public interface TagGroupMapper {
      * @param id 要删除的分组的id
      */
     @Delete("delete from tag_group where id=#{id}")
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     /**
      * 根据id查询
@@ -47,5 +47,5 @@ public interface TagGroupMapper {
      * @return TagGroup
      */
     @Select("select * from tag_group where id=#{id}")
-    TagGroup getById(Integer id);
+    TagGroup getById(Long id);
 }

@@ -44,7 +44,7 @@ public class TagController {
      */
     @GetMapping("/groupList")
     @Cacheable(cacheNames = "tagGroup",key = "#groupId")
-    public Result<List<TagGeneralVO>> listByGroupId(Integer groupId) {
+    public Result<List<TagGeneralVO>> listByGroupId(Long groupId) {
         log.info("根据分组id查询标签：{}",groupId);
         List<TagGeneralVO> list=tagService.listByGroupId(groupId);
         return Result.success(list);

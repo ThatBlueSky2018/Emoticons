@@ -22,5 +22,5 @@ public interface TagGroupService {
      * 根据id删除某个标签分组
      * @param id 分组id
      */
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }

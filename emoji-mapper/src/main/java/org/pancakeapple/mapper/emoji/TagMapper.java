@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.pancakeapple.annotation.AutoFill;
-import org.pancakeapple.dto.emoji.AddTagDTO;
 import org.pancakeapple.entity.emoji.Tag;
 import org.pancakeapple.enumeration.OperationType;
 import org.pancakeapple.vo.emoji.TagGeneralVO;
@@ -23,12 +22,12 @@ public interface TagMapper {
 
     /**
      * 添加一个表情包标签
-     * @param addTagDTO 表情包标签信息
+     * @param tag 表情包标签信息
      */
     @AutoFill(value = OperationType.INSERT)
-    @Insert("insert into tb_tag(name,description,group_id)" +
-            "values (#{name},#{description},#{groupId})")
-    void insert(AddTagDTO addTagDTO);
+    @Insert("insert into tb_tag(name,description,group_id,ref_count,status,create_time,create_user,update_time,update_user)" +
+            "values (#{name},#{description},#{groupId},#{refCount},#{status},#{createTime},#{createUser},#{updateTime},#{updateUser})")
+    void insert(Tag tag);
 
     /**
      * 根据名称查找标签
@@ -46,8 +45,8 @@ public interface TagMapper {
     void deleteById(Long id);
 
     @Delete("delete from tb_tag where group_id=#{id}")
-    void deleteByGroupId(Integer GroupId);
+    void deleteByGroupId(Long GroupId);
 
     @Select("select id,name from tb_tag where group_id=#{groupId} and status=1")
-    List<TagGeneralVO> getByGroupId(Integer groupId);
+    List<TagGeneralVO> getByGroupId(Long groupId);
 }

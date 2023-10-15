@@ -54,7 +54,7 @@ public class TagGroupController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "根据id删除某个标签分组(同时会删除分组下所有标签)")
-    public Result<String> deleteById(@PathVariable Integer id) {
+    public Result<String> deleteById(@PathVariable Long id) {
         log.info("根据id删除标签分组：{}",id);
         tagGroupService.deleteById(id);
         return Result.success(MessageConstant.DELETE_SUCCESS);

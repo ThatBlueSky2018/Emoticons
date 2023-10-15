@@ -17,5 +17,5 @@ public class AddTagDTO {
     private String description;
 
     @Schema(description = "分组id",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
-    private Integer groupId;
+    private Long groupId;
 }
