@@ -3,16 +3,17 @@ package org.pancakeapple.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.pancakeapple.constant.DataConstant;
-import org.pancakeapple.context.BaseContext;
-import org.pancakeapple.dto.emoji.EmojiDTO;
+import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.StatusConstant;
+import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.entity.emoji.Emoji;
-import org.pancakeapple.entity.emoji.EmojiData;
 import org.pancakeapple.entity.emoji.EmojiTag;
-import org.pancakeapple.entity.emoji.Tag;
-import org.pancakeapple.mapper.emoji.EmojiDataMapper;
+import org.pancakeapple.entity.emoji.EmojiType;
+import org.pancakeapple.exception.EmojiTypeNotExistException;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
 import org.pancakeapple.mapper.emoji.EmojiTagMapper;
+import org.pancakeapple.mapper.emoji.TypeMapper;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.EmojiService;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
@@ -22,8 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,47 +33,45 @@ public class EmojiServiceImpl implements EmojiService {
     private EmojiMapper emojiMapper;
 
     @Autowired
-    private EmojiDataMapper emojiDataMapper;
+    private EmojiTagMapper emojiTagMapper;
 
     @Autowired
-    private EmojiTagMapper emojiTagMapper;
+    private TypeMapper typeMapper;
 
     /**
      * 表情包上传
      * 同时保存表情包数据以及对应的标签信息
-     * @param emojiDTO 数据封装
+     * @param emojiUploadDTO 数据封装
      */
     @Transactional
-    public void saveWithTag(EmojiDTO emojiDTO) {
+    public void saveWithTag(EmojiUploadDTO emojiUploadDTO) {
         Emoji emoji=new Emoji();
-        BeanUtils.copyProperties(emojiDTO,emoji);
+        BeanUtils.copyProperties(emojiUploadDTO,emoji);
 
-        //1.向表情包信息表中插入一条数据
-        emoji.setCreateUser(BaseContext.getCurrentId());
-        emoji.setCreateTime(LocalDateTime.now());
+        //1.查看类型是否存在
+        EmojiType emojiType = typeMapper.getById(emojiUploadDTO.getTypeId());
+        if(emojiType == null) {
+            throw new EmojiTypeNotExistException(MessageConstant.EMOJI_TYPE_NOT_EXIST);
+        }
+
+        //2.向表情包信息表中插入一条数据
+        emoji.setHits(DataConstant.DEFAULT_HITS);
+        emoji.setDownloads(DataConstant.DEFAULT_DOWNLOADS);
+        emoji.setFavorite(DataConstant.DEFAULT_FAVORITE);
+        emoji.setStatus(StatusConstant.ABLE);
         emojiMapper.insert(emoji);
-
-        //2.向表情包数据表中插入一条数据
-        EmojiData emojiData=new EmojiData();
-        emojiData.setEmojiId(emoji.getId());  //查询回显，主键返回
-        emojiData.setHits(DataConstant.DEFAULT_HITS);
-        emojiData.setDownloads(DataConstant.DEFAULT_DOWNLOADS);
-        emojiData.setFavorite(DataConstant.DEFAULT_FAVORITE);
-        emojiDataMapper.insert(emojiData);
 
         //3.向表情包与标签的对应关系表中插入若干条数据
         //接收到前端的数据中，标签列表是id列表
         // TODO 后续是否需要改成标签名列表？代码是否需要优化？
-        List<Tag> tags=emojiDTO.getTags();
+        List<Long> tags= emojiUploadDTO.getTags();
         if(tags!=null && tags.size()>0) {
-            List<EmojiTag> emojiTags=new ArrayList<>();
             tags.forEach(tag -> {
                 EmojiTag emojiTag=new EmojiTag();
                 emojiTag.setEmojiId(emoji.getId());
-                emojiTag.setTagId(tag.getId());
-                emojiTags.add(emojiTag);
+                emojiTag.setTagId(tag);
+                emojiTagMapper.insert(emojiTag);
             });
-            emojiTagMapper.insertBatch(emojiTags);
         }
     }
 
@@ -92,7 +89,6 @@ public class EmojiServiceImpl implements EmojiService {
 
     /**
      * 根据id查询表情包详细信息
-     *
      * @param id 主键id
      * @return 详细信息
      */

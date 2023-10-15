@@ -1,6 +1,6 @@
 package org.pancakeapple.service;
 
-import org.pancakeapple.dto.emoji.EmojiDTO;
+import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
@@ -8,9 +8,9 @@ import org.pancakeapple.vo.emoji.EmojiDetailVO;
 public interface EmojiService {
     /**
      * 表情包上传
-     * @param emojiDTO 数据封装
+     * @param emojiUploadDTO 数据封装
      */
-    void saveWithTag(EmojiDTO emojiDTO);
+    void saveWithTag(EmojiUploadDTO emojiUploadDTO);
 
     /**
      * 表情包分页查询

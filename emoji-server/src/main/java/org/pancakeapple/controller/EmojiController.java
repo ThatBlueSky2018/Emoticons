@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
-import org.pancakeapple.dto.emoji.EmojiDTO;
+import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
@@ -28,14 +28,14 @@ public class EmojiController {
 
     /**
      * 上传表情包
-     * @param emojiDTO 数据封装
+     * @param emojiUploadDTO 数据封装
      * @return 提示信息
      */
     @PostMapping
     @Operation(summary = "上传表情包的接口")
-    public Result<String> upload(@RequestBody EmojiDTO emojiDTO) {
-        log.info("上传表情包：{}",emojiDTO);
-        emojiService.saveWithTag(emojiDTO);
+    public Result<String> upload(@RequestBody EmojiUploadDTO emojiUploadDTO) {
+        log.info("上传表情包：{}", emojiUploadDTO);
+        emojiService.saveWithTag(emojiUploadDTO);
         return Result.success(MessageConstant.EMOJI_UPLOAD_SUCCESS);
     }
 

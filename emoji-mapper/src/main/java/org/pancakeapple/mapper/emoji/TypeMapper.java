@@ -19,8 +19,20 @@ public interface TypeMapper {
     @Select("select id,name,ref_count from emoji_type")
     List<TypeVO> list();
 
+    /**
+     * 插入一条数据
+     * @param emojiType 数据封装
+     */
     @AutoFill(value = OperationType.INSERT)
     @Insert("insert into emoji_type(name, ref_count, status, create_time, create_user, update_time, update_user)" +
             "values (#{name},#{refCount},#{status},#{createTime},#{createUser},#{updateTime},#{updateUser})")
     void insert(EmojiType emojiType);
+
+    /**
+     * 根据id查询某个类型
+     * @param id 主键id
+     * @return 实体类
+     */
+    @Select("select * from emoji_type where id=#{id};")
+    EmojiType getById(Long id);
 }

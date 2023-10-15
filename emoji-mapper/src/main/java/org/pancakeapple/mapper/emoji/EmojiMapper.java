@@ -3,7 +3,10 @@ package org.pancakeapple.mapper.emoji;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
+import org.pancakeapple.annotation.AutoFill;
 import org.pancakeapple.entity.emoji.Emoji;
+import org.pancakeapple.enumeration.OperationType;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 
@@ -13,8 +16,12 @@ public interface EmojiMapper {
      * 上传表情包
      * @param emoji 数据封装
      */
-    @Insert("insert into tb_emoji (name, description, url, author, upload_time) " +
-            "values (#{name},#{description},#{url},#{author},#{uploadTime})")
+    @AutoFill(value = OperationType.INSERT)
+    @Insert("insert into tb_emoji(name,description,url,type_id,hits,downloads,favorite," +
+            "create_time,create_user,update_time,update_user)" +
+            "values (#{name},#{description},#{url},#{typeId},#{hits},#{downloads},#{favorite}," +
+            "#{createTime},#{createUser},#{updateTime},#{updateUser})")
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     void insert(Emoji emoji);
 
     /**

@@ -1,10 +1,11 @@
 package org.pancakeapple.mapper.emoji;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.pancakeapple.annotation.AutoFill;
 import org.pancakeapple.entity.emoji.EmojiTag;
-
-import java.util.List;
+import org.pancakeapple.enumeration.OperationType;
 
 @Mapper
 public interface EmojiTagMapper {
@@ -16,8 +17,11 @@ public interface EmojiTagMapper {
     void deleteByTagId(Long tagId);
 
     /**
-     * 批量添加表情包标签信息
-     * @param emojiTags 表情包与标签的对应关系
+     * 插入一条数据
+     * @param emojiTag 数据封装
      */
-    void insertBatch(List<EmojiTag> emojiTags);
+    @AutoFill(value = OperationType.INSERT)
+    @Insert("insert into emoji_tag(emoji_id,tag_id,create_time,create_user,update_time,update_user)" +
+            "values (#{emojiId},#{tagId},#{createTime},#{createUser},#{updateTime},#{updateUser})")
+    void insert(EmojiTag emojiTag);
 }
