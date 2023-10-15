@@ -3,14 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.pancakeapple.mapper.emoji.EmojiMapper">
     <select id="pageQuery" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
-        select te.id,te.name,te.url,te.author,tu.profile_photo
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
         from tb_emoji te left outer join tb_user tu
-        on te.author = tu.id
-    </select>
-    <select id="getById" resultType="org.pancakeapple.vo.emoji.EmojiDetailVO">
-        select te.*,ed.hits,ed.downloads,ed.favorite
-        from tb_emoji te left outer join emoji_data ed
-        on te.id = ed.emoji_id
-        where te.id=#{id}
+        on te.create_user = tu.id
     </select>
 </mapper>

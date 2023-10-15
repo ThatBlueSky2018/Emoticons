@@ -19,7 +19,7 @@ public class UserInfoDTO {
     @Schema(description = "用户名",defaultValue = "user",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String username;
 
-    @Schema(description = "性别(必须MALE/FEMALE)",defaultValue = "user",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(description = "性别(必须MALE/FEMALE)",defaultValue = "MALE",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Gender gender;
 
     @Schema(description = "头像url",defaultValue = "https://xxx/xxx",requiredMode = Schema.RequiredMode.NOT_REQUIRED)

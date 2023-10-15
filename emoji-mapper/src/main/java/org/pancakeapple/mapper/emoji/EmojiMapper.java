@@ -1,9 +1,7 @@
 package org.pancakeapple.mapper.emoji;
 
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
 import org.pancakeapple.annotation.AutoFill;
 import org.pancakeapple.entity.emoji.Emoji;
 import org.pancakeapple.enumeration.OperationType;
@@ -35,5 +33,10 @@ public interface EmojiMapper {
      * @param id 主键id
      * @return 详细信息
      */
+    @Select("select id,name,description,url,type_id,hits,favorite,create_user,create_time " +
+            "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
+
+    @Update("update tb_emoji set hits=hits+1 where id=#{id}")
+    void increaseHits(Long id);
 }

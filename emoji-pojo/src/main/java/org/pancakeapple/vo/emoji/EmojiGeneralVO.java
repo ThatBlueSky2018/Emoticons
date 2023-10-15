@@ -22,7 +22,7 @@ public class EmojiGeneralVO {
     private String url;
 
     @Schema(description = "上传者id(可据此查看作者主页)",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long author;
+    private Long createUser;
 
     @Schema(description = "上传者头像url",defaultValue = "https://xxx/xxx",requiredMode = Schema.RequiredMode.REQUIRED)
     private String profilePhoto;

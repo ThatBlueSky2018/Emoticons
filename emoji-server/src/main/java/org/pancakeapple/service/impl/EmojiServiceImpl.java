@@ -94,6 +94,10 @@ public class EmojiServiceImpl implements EmojiService {
      */
     @Override
     public EmojiDetailVO getById(Long id) {
+        //1.增加表情包点击量
+        emojiMapper.increaseHits(id);
+
+        //2.返回结果
         return emojiMapper.getById(id);
     }
 }

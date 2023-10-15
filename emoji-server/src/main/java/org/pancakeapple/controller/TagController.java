@@ -43,6 +43,7 @@ public class TagController {
      * @return 满足条件的标签列表
      */
     @GetMapping("/groupList")
+    @Operation(summary = "根据分组id查询标签列表")
     @Cacheable(cacheNames = "tagGroup",key = "#groupId")
     public Result<List<TagGeneralVO>> listByGroupId(Long groupId) {
         log.info("根据分组id查询标签：{}",groupId);
