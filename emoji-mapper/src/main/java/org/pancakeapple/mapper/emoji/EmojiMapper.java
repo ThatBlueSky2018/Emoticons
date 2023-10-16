@@ -37,6 +37,10 @@ public interface EmojiMapper {
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
 
+    /**
+     * 增加点击量
+     * @param id 点击的表情包id
+     */
     @Update("update tb_emoji set hits=hits+1 where id=#{id}")
     void increaseHits(Long id);
 }

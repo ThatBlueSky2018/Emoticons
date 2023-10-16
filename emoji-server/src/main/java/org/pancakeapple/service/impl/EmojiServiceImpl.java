@@ -2,6 +2,7 @@ package org.pancakeapple.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.constant.DataConstant;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.constant.StatusConstant;
@@ -10,6 +11,7 @@ import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
 import org.pancakeapple.entity.emoji.Emoji;
 import org.pancakeapple.entity.emoji.EmojiTag;
 import org.pancakeapple.entity.emoji.EmojiType;
+import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.exception.EmojiTypeNotExistException;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
 import org.pancakeapple.mapper.emoji.EmojiTagMapper;
@@ -93,11 +95,8 @@ public class EmojiServiceImpl implements EmojiService {
      * @return 详细信息
      */
     @Override
+    @AutoIncrease(type = BehaviorType.CLICK)
     public EmojiDetailVO getById(Long id) {
-        //1.增加表情包点击量
-        emojiMapper.increaseHits(id);
-
-        //2.返回结果
         return emojiMapper.getById(id);
     }
 }
