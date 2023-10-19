@@ -42,7 +42,7 @@ public class EmojiServiceImpl implements EmojiService {
 
     /**
      * 表情包上传
-     * 同时保存表情包数据以及对应的标签信息
+     * 同时保存表情包数据以及对应的标签信息（可以为空）
      * @param emojiUploadDTO 数据封装
      */
     @Transactional
