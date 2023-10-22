@@ -22,10 +22,9 @@ public interface UserRoleMapper {
 
     /**
      * 为用户绑定角色
-     * @param userId 用户id
-     * @param roleId 角色id
+     * @param userRole 封装userId,
      */
     @Insert("insert into user_role(user_id, role_id) values (#{userId},#{roleId})")
     @AutoFill(value = OperationType.INSERT)
-    void insert(Long userId, Long roleId);
+    void insert(UserRole userRole);
 }

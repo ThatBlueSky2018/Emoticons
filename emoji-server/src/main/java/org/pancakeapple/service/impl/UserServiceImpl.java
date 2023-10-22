@@ -121,7 +121,10 @@ public class UserServiceImpl implements UserService {
         userMapper.addUser(newUser);
 
         //查询回显,维护多对多关系中间表
-        userRoleMapper.insert(newUser.getId(), role.getId());
+        UserRole userRole = new UserRole();
+        userRole.setUserId(newUser.getId());
+        userRole.setRoleId(role.getId());
+        userRoleMapper.insert(userRole);
         return RegisterVO.builder().msg(MessageConstant.REGISTER_SUCCESS).build();
     }
 
