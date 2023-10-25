@@ -46,4 +46,7 @@ public interface EmojiMapper {
 
     @Update("update tb_emoji set favorite=favorite+1 where id=#{id}")
     void increaseFavorite(Long id);
+
+    @Update("update tb_emoji set favorite=favorite-1 where id=#{id}")
+    void decreaseFavorite(Long id);
 }

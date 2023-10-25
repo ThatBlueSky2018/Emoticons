@@ -22,4 +22,7 @@ public class MessageConstant {
     public static final String EMOJI_UPLOAD_SUCCESS="表情包上传成功!";
 
     public static final String FAVORITE_SUCCESS="收藏成功!";
+    public static final String CANCEL_FAVORITE_SUCCESS="取消收藏成功!";
+    public static final String DUPLICATE_FAVORITE="重复收藏表情包!";
+    public static final String NOT_FAVORITE="未收藏该表情包!";
 }

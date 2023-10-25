@@ -16,4 +16,10 @@ public interface FavoriteService {
      * @return 收藏列表
      */
     List<EmojiGeneralVO> list();
+
+    /**
+     * 用户取消收藏
+     * @param emojiId 表情包id
+     */
+    void cancelFavorite(Long emojiId);
 }
