@@ -2,8 +2,8 @@ package org.pancakeapple.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.pancakeapple.annotation.AutoIncrease;
@@ -29,7 +29,11 @@ public class AutoIncreaseAspect {
     @Pointcut("execution(* org.pancakeapple.service..*(..)) && @annotation(org.pancakeapple.annotation.AutoIncrease)")
     public void autoIncreasePointCut(){}
 
-    @Before("autoIncreasePointCut()")
+    /**
+     * 后置通知？ or 前置通知
+     * @param joinPoint 切入点
+     */
+    @After("autoIncreasePointCut()")
     public void autoIncrease(JoinPoint joinPoint) {
         //1.获取当前被拦截的方法上的用户行为
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -44,6 +48,10 @@ public class AutoIncreaseAspect {
             //确保id为Mapper方法的第一个参数
             emojiMapper.increaseHits((Long) args[0]);
             log.info("表情包点击量自动增长：{}",args[0]);
+        } else if (behaviorType == BehaviorType.FAVORITE) {
+            //此处要从DTO中提取出id
+            emojiMapper.increaseFavorite((Long)args[0]);
+            log.info("表情包收藏量自动增长：{}",args[0]);
         }
     }
 }

@@ -20,4 +20,6 @@ public class MessageConstant {
     public static final String FILE_UPLOAD_FAILED="文件上传失败!";
 
     public static final String EMOJI_UPLOAD_SUCCESS="表情包上传成功!";
+
+    public static final String FAVORITE_SUCCESS="收藏成功!";
 }

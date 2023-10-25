@@ -78,6 +78,8 @@ public class SpringSecurityConfig {
                 auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers("/common/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers("/favorite","/favorite/**").hasAuthority(RBACConstant.USER_ROLE);
+
                 auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",
                         "/swagger-resources/**","/**","/v3/api-docs").permitAll();
             })
