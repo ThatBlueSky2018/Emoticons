@@ -6,10 +6,12 @@ import org.pancakeapple.entity.interaction.Favorite;
 import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.mapper.interaction.FavoriteMapper;
 import org.pancakeapple.service.FavoriteService;
+import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
@@ -29,4 +31,14 @@ public class FavoriteServiceImpl implements FavoriteService {
                 .build();
         favoriteMapper.insert(favorite);
     }
+
+    /**
+     * 用户查看收藏列表
+     * @return 收藏列表
+     */
+    @Override
+    public List<EmojiGeneralVO> list() {
+        return favoriteMapper.list(BaseContext.getCurrentId());
+    }
 }
+

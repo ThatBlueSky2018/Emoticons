@@ -6,11 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.FavoriteService;
+import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -23,9 +25,19 @@ public class FavoriteController {
 
     @PostMapping
     @Operation (summary = "收藏表情包")
+    @CacheEvict(cacheNames = "favoriteList", key = "T(org.pancakeapple.context.BaseContext).getCurrentId()")
     public Result<String> favorite(Long emojiId) {
         log.info("用户收藏表情包：{}",emojiId);
         favoriteService.favorite(emojiId);
         return Result.success(MessageConstant.FAVORITE_SUCCESS);
+    }
+
+    @GetMapping
+    @Operation(summary = "查看收藏列表")
+    @Cacheable(cacheNames = "favoriteList", key = "T(org.pancakeapple.context.BaseContext).getCurrentId()")
+    public Result<List<EmojiGeneralVO>> list() {
+        log.info("用户查看收藏列表");
+        List<EmojiGeneralVO> list=favoriteService.list();
+        return Result.success(list);
     }
 }
