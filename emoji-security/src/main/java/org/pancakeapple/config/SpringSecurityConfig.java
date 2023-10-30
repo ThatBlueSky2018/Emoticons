@@ -7,6 +7,7 @@ import org.pancakeapple.security.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -69,13 +70,17 @@ public class SpringSecurityConfig {
                 auth.requestMatchers("/user/admin").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers("/user/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers(HttpMethod.POST,"/tagGroup").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers(HttpMethod.DELETE,"/tagGroup/**").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers("/tagGroup/list").hasAuthority(RBACConstant.USER_ROLE);
-                auth.requestMatchers("/tagGroup", "/tagGroup/**").hasAuthority(RBACConstant.ADMIN_ROLE);
 
-                auth.requestMatchers("/tag").hasAuthority(RBACConstant.USER_ROLE);
-                auth.requestMatchers("/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers(HttpMethod.POST,"/tag").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers(HttpMethod.DELETE,"/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers(HttpMethod.GET,"/emoji","/emoji/**").permitAll();
                 auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
+
                 auth.requestMatchers("/common/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/favorite","/favorite/**").hasAuthority(RBACConstant.USER_ROLE);

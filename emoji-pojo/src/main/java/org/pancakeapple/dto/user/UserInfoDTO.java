@@ -25,6 +25,6 @@ public class UserInfoDTO {
     @Schema(description = "头像url",defaultValue = "https://xxx/xxx",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String profilePhoto;
 
-    @Schema(description = "个性签名",defaultValue = "https://xxx/xxx",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(description = "个性签名",defaultValue = "个性签名",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String signature;
 }

@@ -21,6 +21,12 @@
             <if test="signature!=null">
                 signature=#{signature},
             </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <if test="updateUser!=null">
+                update_user=#{updateUser},
+            </if>
         </set>
         where id=#{id}
     </update>
