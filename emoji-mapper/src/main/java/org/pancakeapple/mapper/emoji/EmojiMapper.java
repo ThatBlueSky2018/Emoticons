@@ -44,9 +44,24 @@ public interface EmojiMapper {
     @Update("update tb_emoji set hits=hits+1 where id=#{id}")
     void increaseHits(Long id);
 
+    /**
+     * 增加收藏量
+     * @param id 表情包id
+     */
     @Update("update tb_emoji set favorite=favorite+1 where id=#{id}")
     void increaseFavorite(Long id);
 
+    /**
+     * 减少收藏量
+     * @param id 表情包id
+     */
     @Update("update tb_emoji set favorite=favorite-1 where id=#{id}")
     void decreaseFavorite(Long id);
+
+    /**
+     * 增加评论量
+     * @param emojiId 表情包id
+     */
+    @Update("update tb_emoji set comments=comments+1 where id=#{id}")
+    void increaseComment(Long emojiId);
 }

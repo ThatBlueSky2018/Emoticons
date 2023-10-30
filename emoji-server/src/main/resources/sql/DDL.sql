@@ -113,6 +113,7 @@ create table tb_emoji (
     url varchar(50) not null comment '存储路径',
     type_id bigint not null comment '类型',
     hits int default 0 comment '点击量',
+    comments int default 0 comment '评论数量',
     downloads int default 0 comment '下载量',
     favorite int default 0 comment'收藏量',
 

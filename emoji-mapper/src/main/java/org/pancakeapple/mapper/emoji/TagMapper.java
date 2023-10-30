@@ -44,9 +44,18 @@ public interface TagMapper {
     @Delete("delete from tb_tag where id=#{id}")
     void deleteById(Long id);
 
+    /**
+     * 根据分组id删除标签
+     * @param GroupId 分组id
+     */
     @Delete("delete from tb_tag where group_id=#{id}")
     void deleteByGroupId(Long GroupId);
 
+    /**
+     * 根据分组id查询标签
+     * @param groupId 分组id
+     * @return 标签信息
+     */
     @Select("select id,name from tb_tag where group_id=#{groupId} and status=1")
     List<TagGeneralVO> getByGroupId(Long groupId);
 }

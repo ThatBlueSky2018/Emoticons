@@ -78,12 +78,17 @@ public class SpringSecurityConfig {
                 auth.requestMatchers(HttpMethod.DELETE,"/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers(HttpMethod.POST,"/type").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers(HttpMethod.GET,"/type","/type/**").hasAuthority(RBACConstant.USER_ROLE);
+
                 auth.requestMatchers(HttpMethod.GET,"/emoji","/emoji/**").permitAll();
                 auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/common/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/favorite","/favorite/**").hasAuthority(RBACConstant.USER_ROLE);
+
+                auth.requestMatchers("/comment","/comment/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",
                         "/swagger-resources/**","/**","/v3/api-docs").permitAll();

@@ -21,6 +21,7 @@ public class Emoji {
     private String url;
     private Long typeId;
     private Integer hits;
+    private Integer comments;
     private Integer downloads;
     private Integer favorite;
 

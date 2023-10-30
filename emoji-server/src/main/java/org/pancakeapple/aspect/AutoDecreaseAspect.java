@@ -2,7 +2,7 @@ package org.pancakeapple.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -30,10 +30,10 @@ public class AutoDecreaseAspect {
     public void autoIncreasePointCut(){}
 
     /**
-     * 后置通知？ or 前置通知
+     * 返回后通知
      * @param joinPoint 切入点
      */
-    @After("autoIncreasePointCut()")
+    @AfterReturning("autoIncreasePointCut()")
     public void autoIncrease(JoinPoint joinPoint) {
         //1.获取当前被拦截的方法上的用户行为
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
