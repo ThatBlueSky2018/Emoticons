@@ -21,6 +21,9 @@
             <if test="signature!=null">
                 signature=#{signature},
             </if>
+            <if test="lastLogin!=null">
+                last_login=#{lastLogin},
+            </if>
             <if test="updateTime!=null">
                 update_time=#{updateTime},
             </if>
