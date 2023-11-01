@@ -37,6 +37,9 @@ public class EmojiDetailVO {
     @Schema(description = "点击量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer hits;
 
+    @Schema(description = "评论量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer comments;
+
     @Schema(description = "下载量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer downloads;
 

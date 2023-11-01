@@ -33,7 +33,7 @@ public interface EmojiMapper {
      * @param id 主键id
      * @return 详细信息
      */
-    @Select("select id,name,description,url,type_id,hits,favorite,create_user,create_time " +
+    @Select("select id,name,description,url,type_id,hits,comments,downloads,favorite,create_user,create_time " +
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
 

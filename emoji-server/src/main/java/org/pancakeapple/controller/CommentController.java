@@ -7,8 +7,11 @@ import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.CommentService;
+import org.pancakeapple.vo.interaction.CommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -30,5 +33,18 @@ public class CommentController {
         log.info("评论表情包：{}",commentDTO);
         commentService.comment(commentDTO);
         return Result.success(MessageConstant.COMMENT_SUCCESS);
+    }
+
+    /**
+     * 查询某一个表情包的评论列表
+     * @param emojiId 表情包id
+     * @return 列表
+     */
+    @GetMapping("/{emojiId}")
+    @Operation(summary = "查询某一个表情包的评论列表")
+    public Result<List<CommentVO>> getComments(@PathVariable Long emojiId) {
+        log.info("获取某一个表情包的评论列表：{}",emojiId);
+        List<CommentVO> commentVOs=commentService.getComments(emojiId);
+        return Result.success(commentVOs);
     }
 }
