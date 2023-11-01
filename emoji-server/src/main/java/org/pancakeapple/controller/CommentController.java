@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.dto.interaction.CommentDTO;
+import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.CommentService;
 import org.pancakeapple.vo.interaction.CommentVO;
@@ -36,6 +37,19 @@ public class CommentController {
     }
 
     /**
+     * 回复某一条评论
+     * @param replyDTO emojiId,commentId,content
+     * @return 提示信息
+     */
+    @PostMapping("/reply")
+    @Operation(summary = "回复评论的接口")
+    public Result<String> reply(@RequestBody ReplyDTO replyDTO) {
+        log.info("回复评论：{}",replyDTO);
+        commentService.reply(replyDTO);
+        return Result.success(MessageConstant.REPLY_SUCCESS);
+    }
+
+    /**
      * 查询某一个表情包的评论列表
      * @param emojiId 表情包id
      * @return 列表
@@ -47,4 +61,6 @@ public class CommentController {
         List<CommentVO> commentVOs=commentService.getComments(emojiId);
         return Result.success(commentVOs);
     }
+
+
 }

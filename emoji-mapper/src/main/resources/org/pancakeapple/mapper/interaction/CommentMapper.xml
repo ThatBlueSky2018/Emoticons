@@ -7,6 +7,10 @@
         insert into tb_comment(emoji_id,content,create_time,create_user,update_time,update_user)
         values (#{emojiId},#{content},#{createTime},#{createUser},#{updateTime},#{updateUser})
     </insert>
+    <insert id="reply" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_comment(reply_id,reply_reply_id,emoji_id,content,create_time,create_user,update_time,update_user)
+        values (#{replyId},#{replyReplyId},#{emojiId},#{content},#{createTime},#{createUser},#{updateTime},#{updateUser})
+    </insert>
     <select id="getComments" resultType="org.pancakeapple.vo.interaction.CommentVO">
         select tc.id,tc.emoji_id,tc.content,tc.create_time,tc.create_user,tu.profile_photo,tu.username
         from emoticons.tb_comment tc left outer join tb_user tu

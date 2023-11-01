@@ -27,4 +27,5 @@ public class MessageConstant {
     public static final String NOT_FAVORITE="未收藏该表情包!";
 
     public static final String COMMENT_SUCCESS="评论成功!";
+    public static final String REPLY_SUCCESS="回复成功!";
 }

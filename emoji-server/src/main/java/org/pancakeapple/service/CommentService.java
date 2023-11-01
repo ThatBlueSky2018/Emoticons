@@ -1,6 +1,7 @@
 package org.pancakeapple.service;
 
 import org.pancakeapple.dto.interaction.CommentDTO;
+import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.vo.interaction.CommentVO;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface CommentService {
      * @return 评论列表
      */
     List<CommentVO> getComments(Long emojiId);
+
+    /**
+     * 回复某一条评论
+     * @param replyDTO emojiId,commentId,content
+     */
+    void reply(ReplyDTO replyDTO);
 }

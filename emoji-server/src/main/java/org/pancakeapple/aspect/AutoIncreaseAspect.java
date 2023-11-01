@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.dto.interaction.CommentDTO;
+import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,10 @@ public class AutoIncreaseAspect {
             log.info("表情包收藏量自动增长：{}",args[0]);
         } else if (behaviorType == BehaviorType.COMMENT) {
             emojiMapper.increaseComment(((CommentDTO)args[0]).getEmojiId());
-            log.info("表情报评论数量自动增长：{}",((CommentDTO)args[0]).getEmojiId());
+            log.info("表情报评论数量自动增长：{}",args[0]);
+        } else if (behaviorType == BehaviorType.REPLY) {
+            emojiMapper.increaseComment(((ReplyDTO)args[0]).getEmojiId());
+            log.info("表情包评论数量自动增长：{}",args[0]);
         }
     }
 }
