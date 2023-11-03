@@ -22,9 +22,6 @@ public class EmojiUploadDTO {
     @Schema(description = "存储路径(用户选择文件后已经返回url)",defaultValue = "https://xxx/xxx",requiredMode = Schema.RequiredMode.REQUIRED)
     private String url;
 
-    @Schema(description = "所属类型id(必须选一个)",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long typeId;
-
     @Schema(description = "表情包标签列表",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private List<Long> tags=new ArrayList<>();
 }

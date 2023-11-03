@@ -15,9 +15,9 @@ public interface EmojiMapper {
      * @param emoji 数据封装
      */
     @AutoFill(value = OperationType.INSERT)
-    @Insert("insert into tb_emoji(name,description,url,type_id,hits,downloads,favorite," +
+    @Insert("insert into tb_emoji(name,description,url,hits,downloads,favorite," +
             "create_time,create_user,update_time,update_user)" +
-            "values (#{name},#{description},#{url},#{typeId},#{hits},#{downloads},#{favorite}," +
+            "values (#{name},#{description},#{url},#{hits},#{downloads},#{favorite}," +
             "#{createTime},#{createUser},#{updateTime},#{updateUser})")
     @Options(useGeneratedKeys = true,keyProperty = "id")
     void insert(Emoji emoji);
@@ -33,7 +33,7 @@ public interface EmojiMapper {
      * @param id 主键id
      * @return 详细信息
      */
-    @Select("select id,name,description,url,type_id,hits,comments,downloads,favorite,create_user,create_time " +
+    @Select("select id,name,description,url,hits,comments,downloads,favorite,create_user,create_time " +
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
 

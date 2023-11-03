@@ -4,18 +4,20 @@ use emoticons;
 
 -- 账号状态：0表示封禁，1表示激活
 -- 是否是官方账号：0表示不是，1表示是
+-- 是否公开收藏夹：1表示公开，0表示私密
 create table tb_user (
     id bigint primary key auto_increment comment '主键',
     email varchar(64) default null comment '邮箱',
     username varchar(64) not null comment '用户名',
     password varchar(256) not null comment '密码',
     gender varchar(16)  default null comment '性别',
-    profile_photo varchar(256) default null comment '头像',
+    profile_photo varchar(256) not null default 'https://emoticons-platform.oss-cn-beijing.aliyuncs.com/5d31f074-c0cd-4603-b67b-06a3738d3d85.png' comment '头像',
     signature varchar(1024) default null comment '个性签名',
     last_login datetime default current_timestamp comment'上次登录时间',
 
     status int not null default 1 comment '账号状态',
     is_official int not null default 0 comment '是否是官方账号',
+    public_favorite int not null default 1 comment '是否公开收藏夹',
 
     create_time datetime default current_timestamp comment '注册时间',
     update_time datetime default current_timestamp comment '修改时间',
@@ -87,23 +89,6 @@ create table tb_tag (
     unique key (name)
 )comment '表情包标签表';
 
--- 表情包类型表
-create table emoji_type (
-    id bigint primary key auto_increment comment '主键',
-    name varchar(64) not null unique comment '类型名称',
-    ref_count bigint not null default 0 comment '引用数量',
-
-    status int not null default 1 comment '审核状态',
-
-    create_time datetime default current_timestamp comment '创建时间',
-    create_user bigint default null comment '创建人',
-    update_time datetime default current_timestamp comment '修改时间',
-    update_user bigint default null comment '修改人',
-
-    foreign key (create_user) references tb_user(id),
-    foreign key (update_user) references tb_user(id)
-)comment '表情包类型表';
-
 -- 表情包信息表
 -- status：0表示未通过审核，1表示通过审核
 create table tb_emoji (
@@ -111,7 +96,6 @@ create table tb_emoji (
     name varchar(20) not null comment '表情包名称',
     description text default null comment '表情包描述',
     url varchar(50) not null comment '存储路径',
-    type_id bigint not null comment '类型',
     hits int default 0 comment '点击量',
     comments int default 0 comment '评论数量',
     downloads int default 0 comment '下载量',
@@ -124,7 +108,6 @@ create table tb_emoji (
     update_time datetime default current_timestamp comment '修改时间',
     update_user bigint default null comment '修改人',
 
-    foreign key (type_id) references emoji_type(id),
     foreign key (create_user) references tb_user(id),
     foreign key (update_user) references tb_user(id)
 )comment '表情包信息表';
@@ -181,7 +164,7 @@ create table tb_favorite (
 -- 消息表
 -- 是否已读：0表示未读，1表示已读
 -- 消息类型包括点赞、评论、私信等等，发送内容类型包括文本、链接等等，都需要严格约定，代码中通过常量直接写死
-create table message (
+create table tb_message (
     id bigint primary key auto_increment comment '主键',
     message_type varchar(64) not null comment '消息类型',
     is_read int not null default 0 comment '是否已读',
