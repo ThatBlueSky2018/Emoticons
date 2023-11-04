@@ -78,9 +78,6 @@ public class SpringSecurityConfig {
                 auth.requestMatchers(HttpMethod.DELETE,"/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.USER_ROLE);
 
-                auth.requestMatchers(HttpMethod.POST,"/type").hasAuthority(RBACConstant.ADMIN_ROLE);
-                auth.requestMatchers(HttpMethod.GET,"/type","/type/**").hasAuthority(RBACConstant.USER_ROLE);
-
                 auth.requestMatchers(HttpMethod.GET,"/emoji","/emoji/**").permitAll();
                 auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
 

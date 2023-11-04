@@ -22,4 +22,9 @@ public interface FavoriteService {
      * @param emojiId 表情包id
      */
     void cancelFavorite(Long emojiId);
+
+    /**
+     * 用户公开收藏夹
+     */
+    void publicFavorite(Integer isOpen);
 }

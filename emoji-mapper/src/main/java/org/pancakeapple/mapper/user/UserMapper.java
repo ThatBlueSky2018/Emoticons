@@ -1,9 +1,6 @@
 package org.pancakeapple.mapper.user;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.pancakeapple.annotation.AutoFill;
 import org.pancakeapple.entity.user.User;
 import org.pancakeapple.enumeration.OperationType;
@@ -41,4 +38,20 @@ public interface UserMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(User user);
+
+    /**
+     * 获取收藏夹是否公开的信息
+     * @param id 用户id
+     * @return 1:公开 2:私密
+     */
+    @Select("select public_favorite from tb_user where id=#{id}")
+    Integer getFavoritesStatus(Long id);
+
+    /**
+     * 设置收藏夹公开状态
+     * @param id 用户id
+     * @param isOpen 是否公开
+     */
+    @Update("update tb_user set public_favorite=#{isOpen} where id = #{id}")
+    void setFavoritesStatus(Long id,Integer isOpen);
 }

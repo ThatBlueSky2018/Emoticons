@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.FavoriteService;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
@@ -62,5 +63,18 @@ public class FavoriteController {
         log.info("用户取消收藏，表情包id:{}",emojiId);
         favoriteService.cancelFavorite(emojiId);
         return Result.success(MessageConstant.CANCEL_FAVORITE_SUCCESS);
+    }
+
+    /**
+     * 用户设置收藏夹公开状态
+     * @param isOpen 1表示公开，0表示私密
+     * @return 提示信息
+     */
+    @PutMapping("/status")
+    @Operation(summary = "修改收藏夹公开状态，1表示设置为公开，0表示设置为私密，重复设置后返回的code=0")
+    public Result<String> setFavoritesPermission(Integer isOpen) {
+        log.info("用户将收藏夹设置为公开，用户id：{}", BaseContext.getCurrentId());
+        favoriteService.publicFavorite(isOpen);
+        return Result.success(MessageConstant.SET_FAVORITES_PERMISSION_SUCCESS);
     }
 }

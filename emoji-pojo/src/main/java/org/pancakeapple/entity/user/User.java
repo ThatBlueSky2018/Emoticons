@@ -38,6 +38,7 @@ public class User implements UserDetails{
 
     private Integer status; //账号状态：0表示封禁，1表示激活
     private Integer isOfficial; //是否是官方账号
+    private Integer publicFavorite; //是否公开收藏夹
 
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

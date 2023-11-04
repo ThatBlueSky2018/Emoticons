@@ -26,8 +26,6 @@ public class Emoji {
     private Integer favorite;
 
     private Integer status;  //是否通过审核
-    private Integer isOfficial; //是否是官方账号
-    private Integer publicFavorite; //是否公开收藏夹
 
     private LocalDateTime createTime;
     private Long createUser;

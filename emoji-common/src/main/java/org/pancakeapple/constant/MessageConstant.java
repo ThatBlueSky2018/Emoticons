@@ -23,6 +23,8 @@ public class MessageConstant {
     public static final String CANCEL_FAVORITE_SUCCESS="取消收藏成功!";
     public static final String DUPLICATE_FAVORITE="重复收藏表情包!";
     public static final String NOT_FAVORITE="未收藏该表情包!";
+    public static final String SET_FAVORITES_PERMISSION_SUCCESS ="设置成功!";
+    public static final String HAS_SET_FAVORITES_PERMISSION="已经是该状态,无需重复设置!";
 
     public static final String COMMENT_SUCCESS="评论成功!";
     public static final String REPLY_SUCCESS="回复成功!";
