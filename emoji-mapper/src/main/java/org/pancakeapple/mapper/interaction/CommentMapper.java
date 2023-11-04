@@ -6,6 +6,7 @@ import org.pancakeapple.annotation.AutoFill;
 import org.pancakeapple.entity.interaction.Comment;
 import org.pancakeapple.enumeration.OperationType;
 import org.pancakeapple.vo.interaction.CommentVO;
+import org.pancakeapple.vo.interaction.ReplyVO;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface CommentMapper {
      */
     @AutoFill(value = OperationType.INSERT)
     void reply(Comment comment);
+
+    List<ReplyVO> getReply(Long commentId);
 }

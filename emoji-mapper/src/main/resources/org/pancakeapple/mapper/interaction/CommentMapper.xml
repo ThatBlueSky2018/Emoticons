@@ -16,5 +16,12 @@
         from emoticons.tb_comment tc left outer join tb_user tu
         on tc.create_user = tu.id
         where tc.emoji_id=#{emojiId} and reply_id is null and reply_reply_id is null
+        order by tc.create_time;
+    </select>
+    <select id="getReply" resultType="org.pancakeapple.vo.interaction.ReplyVO">
+        select tc.id,tc.emoji_id,tc.reply_reply_id,tc.content,tc.create_time,tc.create_user,tu.profile_photo,tu.username
+        from tb_comment tc left outer join tb_user tu
+        on tc.create_user=tu.id
+        where tc.reply_id=#{commentId}
     </select>
 </mapper>

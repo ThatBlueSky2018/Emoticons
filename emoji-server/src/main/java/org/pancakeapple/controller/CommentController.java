@@ -9,6 +9,7 @@ import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.CommentService;
 import org.pancakeapple.vo.interaction.CommentVO;
+import org.pancakeapple.vo.interaction.ReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +63,17 @@ public class CommentController {
         return Result.success(commentVOs);
     }
 
+    /**
+     * 查询某一条评论的回复列表
+     * @param commentId 评论id
+     * @return 列表
+     */
+    @GetMapping("/reply/{commentId}")
+    @Operation(summary = "获取某一条评论的回复列表")
+    public Result<List<ReplyVO>> getReply(@PathVariable Long commentId) {
+        log.info("获取某一条评论的回复列表：{}",commentId);
+        List<ReplyVO> replyList=commentService.getReply(commentId);
+        return Result.success(replyList);
+    }
 
 }
