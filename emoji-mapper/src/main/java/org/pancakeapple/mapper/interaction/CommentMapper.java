@@ -1,5 +1,6 @@
 package org.pancakeapple.mapper.interaction;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.pancakeapple.annotation.AutoFill;
@@ -7,8 +8,6 @@ import org.pancakeapple.entity.interaction.Comment;
 import org.pancakeapple.enumeration.OperationType;
 import org.pancakeapple.vo.interaction.CommentVO;
 import org.pancakeapple.vo.interaction.ReplyVO;
-
-import java.util.List;
 
 @Mapper
 public interface CommentMapper {
@@ -27,7 +26,7 @@ public interface CommentMapper {
     @Select("select * from emoticons.tb_comment where id=#{id}")
     Comment getById(Long id);
 
-    List<CommentVO> getComments(Long emojiId);
+    Page<CommentVO> getComments(Long emojiId);
 
     /**
      * 回复某一条评论
@@ -36,5 +35,5 @@ public interface CommentMapper {
     @AutoFill(value = OperationType.INSERT)
     void reply(Comment comment);
 
-    List<ReplyVO> getReply(Long commentId);
+    Page<ReplyVO> getReply(Long commentId);
 }

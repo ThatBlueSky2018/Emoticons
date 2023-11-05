@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "分页查询参数封装")
-public class EmojiPageQueryDTO implements Serializable {
+public class PageQueryDTO implements Serializable {
     @Schema(description = "页码",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer page;
 

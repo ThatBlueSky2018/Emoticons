@@ -1,11 +1,9 @@
 package org.pancakeapple.service;
 
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.dto.interaction.ReplyDTO;
-import org.pancakeapple.vo.interaction.CommentVO;
-import org.pancakeapple.vo.interaction.ReplyVO;
-
-import java.util.List;
+import org.pancakeapple.result.PageBean;
 
 public interface CommentService {
     /**
@@ -19,7 +17,7 @@ public interface CommentService {
      * @param emojiId 表情包id
      * @return 评论列表
      */
-    List<CommentVO> getComments(Long emojiId);
+    PageBean getComments(Long emojiId, PageQueryDTO pageQueryDTO);
 
     /**
      * 回复某一条评论
@@ -32,5 +30,5 @@ public interface CommentService {
      * @param commentId 评论id
      * @return 回复信息列表
      */
-    List<ReplyVO> getReply(Long commentId);
+    PageBean getReply(Long commentId,PageQueryDTO pageQueryDTO);
 }

@@ -1,13 +1,17 @@
 package org.pancakeapple.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.entity.interaction.Comment;
 import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.exception.NotTopCommentException;
 import org.pancakeapple.mapper.interaction.CommentMapper;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.CommentService;
 import org.pancakeapple.vo.interaction.CommentVO;
 import org.pancakeapple.vo.interaction.ReplyVO;
@@ -15,8 +19,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -42,8 +44,10 @@ public class CommentServiceImpl implements CommentService {
      * @return 评论列表
      */
     @Override
-    public List<CommentVO> getComments(Long emojiId) {
-        return commentMapper.getComments(emojiId);
+    public PageBean getComments(Long emojiId, PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<CommentVO> page=commentMapper.getComments(emojiId);
+        return new PageBean(page.getTotal(),page.getResult());
     }
 
     /**
@@ -83,11 +87,13 @@ public class CommentServiceImpl implements CommentService {
      * @return 回复信息列表
      */
     @Override
-    public List<ReplyVO> getReply(Long commentId) {
+    public PageBean getReply(Long commentId,PageQueryDTO pageQueryDTO) {
         Comment comment = commentMapper.getById(commentId);
         if(comment.getReplyId()!=null || comment.getReplyReplyId()!=null) {
             throw new NotTopCommentException(MessageConstant.NOT_TOP_COMMENT);
         }
-        return commentMapper.getReply(commentId);
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<ReplyVO> page=commentMapper.getReply(commentId);
+        return new PageBean(page.getTotal(),page.getResult());
     }
 }

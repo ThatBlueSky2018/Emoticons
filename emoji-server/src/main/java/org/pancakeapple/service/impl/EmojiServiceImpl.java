@@ -6,7 +6,7 @@ import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.constant.DataConstant;
 import org.pancakeapple.constant.StatusConstant;
 import org.pancakeapple.dto.emoji.EmojiUploadDTO;
-import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.entity.emoji.Emoji;
 import org.pancakeapple.entity.emoji.EmojiTag;
 import org.pancakeapple.enumeration.BehaviorType;
@@ -67,12 +67,12 @@ public class EmojiServiceImpl implements EmojiService {
 
     /**
      * 表情包分页查询
-     * @param emojiPageQueryDTO 封装页码数以及每页记录数
+     * @param pageQueryDTO 封装页码数以及每页记录数
      * @return 总记录数以及当前页记录列表
      */
     @Override
-    public PageBean pageQuery(EmojiPageQueryDTO emojiPageQueryDTO) {
-        PageHelper.startPage(emojiPageQueryDTO.getPage(),emojiPageQueryDTO.getPageSize());
+    public PageBean pageQuery(PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(), pageQueryDTO.getPageSize());
         Page<EmojiGeneralVO> page=emojiMapper.pageQuery();
         return new PageBean(page.getTotal(),page.getResult());
     }

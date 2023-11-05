@@ -4,16 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.dto.interaction.ReplyDTO;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.CommentService;
-import org.pancakeapple.vo.interaction.CommentVO;
-import org.pancakeapple.vo.interaction.ReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -51,29 +49,29 @@ public class CommentController {
     }
 
     /**
-     * 查询某一个表情包的评论列表
+     * 查询某一个表情包的评论列表(分页查询，滚动加载)
      * @param emojiId 表情包id
      * @return 列表
      */
     @GetMapping("/{emojiId}")
     @Operation(summary = "查询某一个表情包的评论列表")
-    public Result<List<CommentVO>> getComments(@PathVariable Long emojiId) {
+    public Result<PageBean> getComments(@PathVariable Long emojiId, PageQueryDTO pageQueryDTO) {
         log.info("获取某一个表情包的评论列表：{}",emojiId);
-        List<CommentVO> commentVOs=commentService.getComments(emojiId);
-        return Result.success(commentVOs);
+        PageBean pageBean=commentService.getComments(emojiId,pageQueryDTO);
+        return Result.success(pageBean);
     }
 
     /**
-     * 查询某一条评论的回复列表
+     * 查询某一条评论的回复列表(分页查询，滚动加载)
      * @param commentId 评论id
      * @return 列表
      */
     @GetMapping("/reply/{commentId}")
     @Operation(summary = "获取某一条评论的回复列表")
-    public Result<List<ReplyVO>> getReply(@PathVariable Long commentId) {
+    public Result<PageBean> getReply(@PathVariable Long commentId,PageQueryDTO pageQueryDTO) {
         log.info("获取某一条评论的回复列表：{}",commentId);
-        List<ReplyVO> replyList=commentService.getReply(commentId);
-        return Result.success(replyList);
+        PageBean pageBean=commentService.getReply(commentId,pageQueryDTO);
+        return Result.success(pageBean);
     }
 
 }

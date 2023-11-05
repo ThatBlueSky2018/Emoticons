@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.dto.emoji.EmojiUploadDTO;
-import org.pancakeapple.dto.emoji.EmojiPageQueryDTO;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.EmojiService;
@@ -41,15 +41,15 @@ public class EmojiController {
 
     /**
      * 表情包整体信息分页查询
-     * @param emojiPageQueryDTO 封装页码数以及每页记录数
+     * @param pageQueryDTO 封装页码数以及每页记录数
      * @return 总记录数以及当前页记录列表
      */
     @GetMapping
     @Operation(summary = "表情包信息分页查询")
     @ApiOperationSupport(author = "3010796910sky@gmail.com")
-    public Result<PageBean> pageQuery(EmojiPageQueryDTO emojiPageQueryDTO) {
-        log.info("表情包分页查询：{}", emojiPageQueryDTO);
-        PageBean pageBean = emojiService.pageQuery(emojiPageQueryDTO);
+    public Result<PageBean> pageQuery(PageQueryDTO pageQueryDTO) {
+        log.info("表情包分页查询：{}", pageQueryDTO);
+        PageBean pageBean = emojiService.pageQuery(pageQueryDTO);
         return Result.success(pageBean);
     }
 
