@@ -2,7 +2,7 @@ package org.pancakeapple.service.impl;
 
 import org.pancakeapple.annotation.AutoDecrease;
 import org.pancakeapple.annotation.AutoIncrease;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.entity.interaction.Favorite;
 import org.pancakeapple.enumeration.BehaviorType;
@@ -37,7 +37,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void favorite(Long emojiId) {
         List<Favorite> list = favoriteMapper.getByUserIdAndEmojiId(BaseContext.getCurrentId(), emojiId);
         if(list!=null&&list.size()>0) {
-            throw new DuplicateFavoriteException(MessageConstant.DUPLICATE_FAVORITE);
+            throw new DuplicateFavoriteException(PromptConstant.DUPLICATE_FAVORITE);
         }
         Favorite favorite = Favorite.builder()
                 .userId(BaseContext.getCurrentId())
@@ -65,7 +65,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void cancelFavorite(Long emojiId) {
         List<Favorite> list = favoriteMapper.getByUserIdAndEmojiId(BaseContext.getCurrentId(), emojiId);
         if(list == null || list.size() == 0) {
-            throw new NoFavoriteException(MessageConstant.NOT_FAVORITE);
+            throw new NoFavoriteException(PromptConstant.NOT_FAVORITE);
         }
         Long userId = BaseContext.getCurrentId();
         favoriteMapper.deleteByUserIdAndEmojiId(userId, emojiId);
@@ -78,7 +78,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void publicFavorite(Integer isOpen) {
         Integer favoriteStatus = userMapper.getFavoritesStatus(BaseContext.getCurrentId());
         if(Objects.equals(favoriteStatus, isOpen)) {
-            throw new HasPublicFavoritesException(MessageConstant.HAS_SET_FAVORITES_PERMISSION);
+            throw new HasPublicFavoritesException(PromptConstant.HAS_SET_FAVORITES_PERMISSION);
         }
         userMapper.setFavoritesStatus(BaseContext.getCurrentId(),isOpen);
     }

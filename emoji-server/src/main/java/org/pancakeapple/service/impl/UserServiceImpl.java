@@ -1,6 +1,6 @@
 package org.pancakeapple.service.impl;
 
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.constant.RBACConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.user.LoginDTO;
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
     public RegisterVO register(RegisterDTO registerDTO) {
         //用户名已经存在的情况
         if(userMapper.findUserByUsername(registerDTO.getUsername())!=null) {
-            throw new UserNameExistException(MessageConstant.ACCOUNT_EXIST);
+            throw new UserNameExistException(PromptConstant.ACCOUNT_EXIST);
         }
         //默认角色是USER
         Role role = roleMapper.findRoleByRoleName(RBACConstant.DEFAULT_ROLE);
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
         userRole.setUserId(newUser.getId());
         userRole.setRoleId(role.getId());
         userRoleMapper.insert(userRole);
-        return RegisterVO.builder().msg(MessageConstant.REGISTER_SUCCESS).build();
+        return RegisterVO.builder().msg(PromptConstant.REGISTER_SUCCESS).build();
     }
 
     /**
@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService {
         UserInfoVO userInfo = userMapper.getById(BaseContext.getCurrentId());
         if(!Objects.equals(userInfo.getUsername(), userInfoDTO.getUsername())) {
             if(userMapper.findUserByUsername(userInfoDTO.getUsername())!=null) {
-                throw new UserNameExistException(MessageConstant.ACCOUNT_EXIST);
+                throw new UserNameExistException(PromptConstant.ACCOUNT_EXIST);
             }
         }
 

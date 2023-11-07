@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.dto.interaction.ReplyDTO;
@@ -32,7 +32,7 @@ public class CommentController {
     public Result<String> comment(@RequestBody CommentDTO commentDTO) {
         log.info("评论表情包：{}",commentDTO);
         commentService.comment(commentDTO);
-        return Result.success(MessageConstant.COMMENT_SUCCESS);
+        return Result.success(PromptConstant.COMMENT_SUCCESS);
     }
 
     /**
@@ -45,7 +45,7 @@ public class CommentController {
     public Result<String> reply(@RequestBody ReplyDTO replyDTO) {
         log.info("回复评论：{}",replyDTO);
         commentService.reply(replyDTO);
-        return Result.success(MessageConstant.REPLY_SUCCESS);
+        return Result.success(PromptConstant.REPLY_SUCCESS);
     }
 
     /**

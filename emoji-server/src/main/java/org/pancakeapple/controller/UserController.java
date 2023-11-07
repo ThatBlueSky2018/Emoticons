@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
 import org.pancakeapple.dto.user.UserInfoDTO;
@@ -35,8 +35,8 @@ public class UserController {
     public Result<RegisterVO> register(@RequestBody RegisterDTO registerDTO) {
         log.info("用户注册：{}",registerDTO);
         RegisterVO registerVO = userService.register(registerDTO);
-        if(registerVO.getMsg().equals(MessageConstant.ACCOUNT_EXIST)) {
-            return Result.error(MessageConstant.ACCOUNT_EXIST);
+        if(registerVO.getMsg().equals(PromptConstant.ACCOUNT_EXIST)) {
+            return Result.error(PromptConstant.ACCOUNT_EXIST);
         }
         return Result.success(registerVO);
     }
@@ -54,7 +54,7 @@ public class UserController {
         try {
             loginVO = userService.login(loginDTO);
         } catch (AuthenticationException e) {
-            return Result.error(MessageConstant.ACCOUNT_ERROR);
+            return Result.error(PromptConstant.ACCOUNT_ERROR);
         }
         return Result.success(loginVO);
     }
@@ -82,7 +82,7 @@ public class UserController {
     public Result<String> update(@RequestBody UserInfoDTO userInfoDTO) {
         log.info("修改用户信息，{}",userInfoDTO);
         userService.update(userInfoDTO);
-        return Result.success(MessageConstant.UPDATE_SUCCESS);
+        return Result.success(PromptConstant.UPDATE_SUCCESS);
     }
 
     @GetMapping("/user")

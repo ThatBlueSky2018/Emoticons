@@ -28,7 +28,7 @@ public class EmojiDetailVO {
     private String url;
 
     @Schema(description = "上传者id(可据此查看作者主页)",defaultValue = "1",requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long author;
+    private Long createUser;
 
     @Schema(description = "上传时间",defaultValue = "2023-10-01 00:00:00",requiredMode = Schema.RequiredMode.REQUIRED)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

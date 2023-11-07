@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.constant.SseConstant;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.session.SseSession;
@@ -47,7 +47,7 @@ public class CommonController {
         } catch (IOException e) {
             log.error("文件上传失败！");
         }
-        return Result.error(MessageConstant.FILE_UPLOAD_FAILED);
+        return Result.error(PromptConstant.FILE_UPLOAD_FAILED);
     }
 
     /**
@@ -93,9 +93,9 @@ public class CommonController {
      * @param username 用户名
      * @return 提示信息
      */
-    @DeleteMapping
+    @GetMapping("/close/{username}")
     @Operation(summary = "断开Sse连接")
-    public Result<String> close(String username) {
+    public Result<String> close(@PathVariable String username) {
         log.info("用户断开连接，用户名: {}", username);
         sseSession.remove(username);
         return Result.success(SseConstant.CLOSE_SUCCESS);

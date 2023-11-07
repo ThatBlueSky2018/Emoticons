@@ -4,7 +4,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.result.PageBean;
@@ -36,7 +36,7 @@ public class EmojiController {
     public Result<String> upload(@RequestBody EmojiUploadDTO emojiUploadDTO) {
         log.info("上传表情包：{}", emojiUploadDTO);
         emojiService.saveWithTag(emojiUploadDTO);
-        return Result.success(MessageConstant.EMOJI_UPLOAD_SUCCESS);
+        return Result.success(PromptConstant.EMOJI_UPLOAD_SUCCESS);
     }
 
     /**

@@ -3,12 +3,14 @@ package org.pancakeapple.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.pancakeapple.annotation.AutoIncrease;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.annotation.SendMessage;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.dto.interaction.CommentDTO;
 import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.entity.interaction.Comment;
 import org.pancakeapple.enumeration.BehaviorType;
+import org.pancakeapple.enumeration.MessageType;
 import org.pancakeapple.exception.NotTopCommentException;
 import org.pancakeapple.mapper.interaction.CommentMapper;
 import org.pancakeapple.result.PageBean;
@@ -32,6 +34,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     @AutoIncrease(type = BehaviorType.COMMENT)
+    @SendMessage(messageType = MessageType.COMMENT)
     public void comment(CommentDTO commentDTO) {
         Comment comment=new Comment();
         BeanUtils.copyProperties(commentDTO,comment);
@@ -90,7 +93,7 @@ public class CommentServiceImpl implements CommentService {
     public PageBean getReply(Long commentId,PageQueryDTO pageQueryDTO) {
         Comment comment = commentMapper.getById(commentId);
         if(comment.getReplyId()!=null || comment.getReplyReplyId()!=null) {
-            throw new NotTopCommentException(MessageConstant.NOT_TOP_COMMENT);
+            throw new NotTopCommentException(PromptConstant.NOT_TOP_COMMENT);
         }
         PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
         Page<ReplyVO> page=commentMapper.getReply(commentId);

@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.AddTagGroupDTO;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.TagGroupService;
@@ -31,7 +31,7 @@ public class TagGroupController {
     public Result<String> add(@RequestBody AddTagGroupDTO addTagGroupDTO) {
         log.info("添加标签分组，分组名称：{}",addTagGroupDTO.getName());
         tagGroupService.add(addTagGroupDTO);
-        return Result.success(MessageConstant.ADD_SUCCESS);
+        return Result.success(PromptConstant.ADD_SUCCESS);
     }
 
     /**
@@ -57,6 +57,6 @@ public class TagGroupController {
     public Result<String> deleteById(@PathVariable Long id) {
         log.info("根据id删除标签分组：{}",id);
         tagGroupService.deleteById(id);
-        return Result.success(MessageConstant.DELETE_SUCCESS);
+        return Result.success(PromptConstant.DELETE_SUCCESS);
     }
 }

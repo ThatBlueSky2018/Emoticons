@@ -1,7 +1,7 @@
 package org.pancakeapple.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.result.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,6 +21,6 @@ public class GlobalExceptionHandler {
         if(e.getMessage()!=null) {
             return Result.error(e.getMessage());
         }
-        return Result.error(MessageConstant.GLOBAL_ERROR);
+        return Result.error(PromptConstant.GLOBAL_ERROR);
     }
 }

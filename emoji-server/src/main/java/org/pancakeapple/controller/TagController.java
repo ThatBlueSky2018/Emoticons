@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.AddTagDTO;
 import org.pancakeapple.exception.TagExistException;
 import org.pancakeapple.result.Result;
@@ -62,7 +62,7 @@ public class TagController {
         log.info("新增表情包标签：{}",addTagDTO);
         try {
             tagService.addTag(addTagDTO);
-            return Result.success(MessageConstant.ADD_SUCCESS);
+            return Result.success(PromptConstant.ADD_SUCCESS);
         }catch (TagExistException e) {
             return Result.error(e.getMessage());
         }
@@ -79,6 +79,6 @@ public class TagController {
     public Result<String> deleteTag(@PathVariable Long id) {
         log.info("删除表情包标签，id为{}",id);
         tagService.deleteById(id);
-        return Result.success(MessageConstant.DELETE_SUCCESS);
+        return Result.success(PromptConstant.DELETE_SUCCESS);
     }
 }

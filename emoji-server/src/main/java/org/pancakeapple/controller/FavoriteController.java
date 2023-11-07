@@ -3,7 +3,7 @@ package org.pancakeapple.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.FavoriteService;
@@ -35,7 +35,7 @@ public class FavoriteController {
     public Result<String> favorite(Long emojiId) {
         log.info("用户收藏表情包：{}",emojiId);
         favoriteService.favorite(emojiId);
-        return Result.success(MessageConstant.FAVORITE_SUCCESS);
+        return Result.success(PromptConstant.FAVORITE_SUCCESS);
     }
 
     /**
@@ -62,7 +62,7 @@ public class FavoriteController {
     public Result<String> cancelFavorite(Long emojiId) {
         log.info("用户取消收藏，表情包id:{}",emojiId);
         favoriteService.cancelFavorite(emojiId);
-        return Result.success(MessageConstant.CANCEL_FAVORITE_SUCCESS);
+        return Result.success(PromptConstant.CANCEL_FAVORITE_SUCCESS);
     }
 
     /**
@@ -75,6 +75,6 @@ public class FavoriteController {
     public Result<String> setFavoritesPermission(Integer isOpen) {
         log.info("用户将收藏夹设置为公开，用户id：{}", BaseContext.getCurrentId());
         favoriteService.publicFavorite(isOpen);
-        return Result.success(MessageConstant.SET_FAVORITES_PERMISSION_SUCCESS);
+        return Result.success(PromptConstant.SET_FAVORITES_PERMISSION_SUCCESS);
     }
 }

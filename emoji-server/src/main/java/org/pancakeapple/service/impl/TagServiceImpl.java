@@ -1,6 +1,6 @@
 package org.pancakeapple.service.impl;
 
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.constant.StatusConstant;
 import org.pancakeapple.dto.emoji.AddTagDTO;
 import org.pancakeapple.entity.emoji.Tag;
@@ -49,7 +49,7 @@ public class TagServiceImpl implements TagService {
     public List<TagGeneralVO> listByGroupId(Long groupId) {
         TagGroup tagGroup = tagGroupMapper.getById(groupId);
         if(tagGroup==null) {
-            throw new TagGroupNotExistException(MessageConstant.TAG_GROUP_NOT_EXIST);
+            throw new TagGroupNotExistException(PromptConstant.TAG_GROUP_NOT_EXIST);
         }
         return tagMapper.getByGroupId(groupId);
     }
@@ -63,7 +63,7 @@ public class TagServiceImpl implements TagService {
         //1.确保标签分组存在
         TagGroup tagGroup = tagGroupMapper.getById(addTagDTO.getGroupId());
         if(tagGroup==null) {
-            throw new TagGroupNotExistException(MessageConstant.TAG_GROUP_NOT_EXIST);
+            throw new TagGroupNotExistException(PromptConstant.TAG_GROUP_NOT_EXIST);
         }
 
         //2.保证标签名称不重复
@@ -75,7 +75,7 @@ public class TagServiceImpl implements TagService {
             tagMapper.insert(tag);
         }
         else {
-            throw new TagExistException(MessageConstant.TAG_EXIST);
+            throw new TagExistException(PromptConstant.TAG_EXIST);
         }
     }
 

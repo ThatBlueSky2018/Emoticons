@@ -1,6 +1,6 @@
 package org.pancakeapple.service.impl;
 
-import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.dto.emoji.AddTagGroupDTO;
 import org.pancakeapple.entity.emoji.TagGroup;
 import org.pancakeapple.exception.TagGroupExistException;
@@ -28,7 +28,7 @@ public class TagGroupServiceImpl implements TagGroupService {
     @Override
     public void add(AddTagGroupDTO addTagGroupDTO) {
         if(tagGroupMapper.getByName(addTagGroupDTO.getName())!=null) {
-            throw new TagGroupExistException(MessageConstant.TAG_GROUP_EXIST);
+            throw new TagGroupExistException(PromptConstant.TAG_GROUP_EXIST);
         }
         TagGroup tagGroup = new TagGroup();
         tagGroup.setName(addTagGroupDTO.getName());
