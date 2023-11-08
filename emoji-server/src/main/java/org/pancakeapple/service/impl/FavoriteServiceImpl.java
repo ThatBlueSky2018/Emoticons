@@ -1,18 +1,23 @@
 package org.pancakeapple.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.pancakeapple.annotation.AutoDecrease;
 import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.annotation.SendMessage;
 import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.context.BaseContext;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.entity.interaction.Favorite;
 import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.enumeration.MessageType;
 import org.pancakeapple.exception.DuplicateFavoriteException;
 import org.pancakeapple.exception.HasPublicFavoritesException;
 import org.pancakeapple.exception.NoFavoriteException;
+import org.pancakeapple.exception.PrivateFavoriteException;
 import org.pancakeapple.mapper.interaction.FavoriteMapper;
 import org.pancakeapple.mapper.user.UserMapper;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.FavoriteService;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +89,24 @@ public class FavoriteServiceImpl implements FavoriteService {
             throw new HasPublicFavoritesException(PromptConstant.HAS_SET_FAVORITES_PERMISSION);
         }
         userMapper.setFavoritesStatus(BaseContext.getCurrentId(),isOpen);
+    }
+
+    /**
+     * 查询某个用户的收藏夹
+     * @param userId 用户id
+     * @return 分页信息封装
+     */
+    @Override
+    public PageBean getOtherFavoriteList(Long userId, PageQueryDTO pageQueryDTO) {
+        if(Objects.equals(userId, BaseContext.getCurrentId())) {
+            throw new RuntimeException(PromptConstant.CAN_ONLY_GET_OTHERS_FAVORITE);
+        }
+        Integer publicFavorite = userMapper.getById(userId).getPublicFavorite();
+        if(publicFavorite == 0) {
+            throw new PrivateFavoriteException(PromptConstant.USER_NOT_PUBLIC_FAVORITE);
+        }
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page=favoriteMapper.getOtherFavoriteList(userId);
+        return new PageBean(page.getTotal(),page.getResult());
     }
 }

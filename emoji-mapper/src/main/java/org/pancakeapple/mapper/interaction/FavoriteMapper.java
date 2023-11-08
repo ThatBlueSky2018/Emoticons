@@ -1,5 +1,6 @@
 package org.pancakeapple.mapper.interaction;
 
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -42,4 +43,6 @@ public interface FavoriteMapper {
      */
     @Delete("delete from tb_favorite where user_id=#{userId} and emoji_id=#{emojiId}")
     void deleteByUserIdAndEmojiId(Long userId, Long emojiId);
+
+    Page<EmojiGeneralVO> getOtherFavoriteList(Long userId);
 }

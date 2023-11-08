@@ -1,5 +1,7 @@
 package org.pancakeapple.service;
 
+import org.pancakeapple.dto.emoji.PageQueryDTO;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 
 import java.util.List;
@@ -27,4 +29,11 @@ public interface FavoriteService {
      * 用户公开收藏夹
      */
     void publicFavorite(Integer isOpen);
+
+    /**
+     * 查询某个用户的收藏夹
+     * @param userId 用户id
+     * @return 分页信息封装
+     */
+    PageBean getOtherFavoriteList(Long userId, PageQueryDTO pageQueryDTO);
 }

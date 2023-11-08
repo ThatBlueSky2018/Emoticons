@@ -8,4 +8,10 @@
         left outer join tb_user tu on te.create_user=tu.id
         where tf.user_id=#{userId}
     </select>
+    <select id="getOtherFavoriteList" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,tu.id,tu.profile_photo
+        from tb_favorite tf left outer join tb_emoji te on tf.emoji_id = te.id
+                            left outer join tb_user tu on te.create_user=tu.id
+        where tf.user_id=#{userId}
+    </select>
 </mapper>

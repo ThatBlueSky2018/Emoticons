@@ -37,6 +37,9 @@ public class UserInfoVO {
     @Schema(description = "是否是官方账号",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer isOfficial;
 
+    @Schema(description = "是否公开收藏夹",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer publicFavorite;
+
     @Schema(description = "注册时间",defaultValue = "2023-10-01 00:00:00",requiredMode = Schema.RequiredMode.REQUIRED)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;

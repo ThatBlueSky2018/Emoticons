@@ -25,6 +25,8 @@ public class PromptConstant {
     public static final String NOT_FAVORITE="未收藏该表情包!";
     public static final String SET_FAVORITES_PERMISSION_SUCCESS ="设置成功!";
     public static final String HAS_SET_FAVORITES_PERMISSION="已经是该状态,无需重复设置!";
+    public static final String USER_NOT_PUBLIC_FAVORITE="用户未公开收藏夹!";
+    public static final String CAN_ONLY_GET_OTHERS_FAVORITE="只能查询其他用户的收藏夹";
 
     public static final String COMMENT_SUCCESS="评论成功!";
     public static final String REPLY_SUCCESS="回复成功!";

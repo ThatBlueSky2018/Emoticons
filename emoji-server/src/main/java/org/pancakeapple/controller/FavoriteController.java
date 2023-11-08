@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.context.BaseContext;
+import org.pancakeapple.dto.emoji.PageQueryDTO;
+import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.FavoriteService;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
@@ -76,5 +78,12 @@ public class FavoriteController {
         log.info("用户将收藏夹设置为公开，用户id：{}", BaseContext.getCurrentId());
         favoriteService.publicFavorite(isOpen);
         return Result.success(PromptConstant.SET_FAVORITES_PERMISSION_SUCCESS);
+    }
+
+    @GetMapping("/list/{userId}")
+    @Operation(summary = "分页查询其他用户的收藏夹")
+    public Result<PageBean> getOtherFavoriteList(@PathVariable Long userId, PageQueryDTO pageQueryDTO) {
+        log.info("查询某个用户的收藏列表：{}",userId);
+        return Result.success(favoriteService.getOtherFavoriteList(userId,pageQueryDTO));
     }
 }

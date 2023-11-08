@@ -29,7 +29,7 @@ public interface UserMapper {
      * @param id 主键id
      * @return 用户信息
      */
-    @Select("select id,email,username,gender,profile_photo,signature,is_official,create_time from tb_user where id=#{id}")
+    @Select("select id,email,username,gender,profile_photo,signature,is_official,public_favorite,create_time from tb_user where id=#{id}")
     UserInfoVO getById(Long id);
 
     /**
