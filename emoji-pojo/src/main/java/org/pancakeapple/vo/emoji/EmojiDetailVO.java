@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -45,4 +46,7 @@ public class EmojiDetailVO {
 
     @Schema(description = "收藏量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer favorite;
+
+    @Schema(description = "标签列表",defaultValue = "['标签1','标签2']",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private List<String> tags;
 }

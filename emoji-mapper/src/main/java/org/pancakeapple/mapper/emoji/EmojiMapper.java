@@ -8,6 +8,8 @@ import org.pancakeapple.enumeration.OperationType;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 
+import java.util.List;
+
 @Mapper
 public interface EmojiMapper {
     /**
@@ -36,6 +38,13 @@ public interface EmojiMapper {
     @Select("select id,name,description,url,hits,comments,downloads,favorite,create_user,create_time " +
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
+
+    /**
+     * 根据id查询表情包具有的标签列表
+     * @param id 表情包id
+     * @return 标签名列表
+     */
+    List<String> getTagsById(Long id);
 
     /**
      * 增加点击量

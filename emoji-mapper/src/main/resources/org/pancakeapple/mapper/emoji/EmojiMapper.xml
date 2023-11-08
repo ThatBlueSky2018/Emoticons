@@ -7,4 +7,10 @@
         from tb_emoji te left outer join tb_user tu
         on te.create_user = tu.id
     </select>
+    <select id="getTagsById" resultType="java.lang.String">
+        select tt.name
+        from emoji_tag et left outer join tb_tag tt
+        on et.tag_id = tt.id
+        where et.emoji_id=#{id}
+    </select>
 </mapper>

@@ -85,6 +85,9 @@ public class EmojiServiceImpl implements EmojiService {
     @Override
     @AutoIncrease(type = BehaviorType.CLICK)
     public EmojiDetailVO getById(Long id) {
-        return emojiMapper.getById(id);
+        EmojiDetailVO emojiDetailVO = emojiMapper.getById(id);
+        List<String> tags = emojiMapper.getTagsById(id);
+        emojiDetailVO.setTags(tags);
+        return emojiDetailVO;
     }
 }
