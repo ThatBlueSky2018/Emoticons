@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.constant.SseConstant;
+import org.pancakeapple.context.BaseContext;
+import org.pancakeapple.mapper.user.UserMapper;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.session.SseSession;
 import org.pancakeapple.utils.AliOSSUtils;
@@ -32,6 +34,9 @@ public class CommonController {
     @Autowired
     private SseSession sseSession;
 
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * 文件上传
      * @param file 要上传的文件
@@ -52,12 +57,12 @@ public class CommonController {
 
     /**
      * 建立连接
-     * @param username 用户名
      * @return SseEmitter对象
      */
-    @GetMapping(value = "/connect/{username}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(summary = "建立Sse连接")
-    public SseEmitter connect(@PathVariable("username") String username){
+    public SseEmitter connect(){
+        String username = userMapper.getById(BaseContext.getCurrentId()).getUsername();
         log.info("开始建立Sse连接，用户名：{}",username);
         if(sseSession.exists(username)) {
             //如果已经连接，先删除一次
@@ -90,12 +95,12 @@ public class CommonController {
 
     /**
      * 断开连接
-     * @param username 用户名
      * @return 提示信息
      */
-    @GetMapping("/close/{username}")
+    @GetMapping("/close")
     @Operation(summary = "断开Sse连接")
-    public Result<String> close(@PathVariable String username) {
+    public Result<String> close() {
+        String username = userMapper.getById(BaseContext.getCurrentId()).getUsername();
         log.info("用户断开连接，用户名: {}", username);
         sseSession.remove(username);
         return Result.success(SseConstant.CLOSE_SUCCESS);
