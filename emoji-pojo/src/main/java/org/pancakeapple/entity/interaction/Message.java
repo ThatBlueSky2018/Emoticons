@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.pancakeapple.enumeration.ContentType;
+import org.pancakeapple.enumeration.MessageType;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Message {
     public static Integer HAS_READ=1;
 
     private Long id;
-    private String messageType;
+    private MessageType messageType;
     private Integer isRead;  //0表示未读，1表示已读
     private Long senderId;
     private Long receiverId;

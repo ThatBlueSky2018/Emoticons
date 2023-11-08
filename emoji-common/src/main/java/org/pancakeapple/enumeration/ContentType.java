@@ -7,5 +7,5 @@ package org.pancakeapple.enumeration;
  * To be continued...
  */
 public enum ContentType {
-    TEXT,LINK
+    TEXT,LINK,NULL
 }

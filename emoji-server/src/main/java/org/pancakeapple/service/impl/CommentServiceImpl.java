@@ -60,6 +60,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     @AutoIncrease(type = BehaviorType.REPLY)
+    @SendMessage(messageType = MessageType.REPLY)
     public void reply(ReplyDTO replyDTO) {
         //获取要回复的评论
         Comment replyComment = commentMapper.getById(replyDTO.getCommentId());

@@ -39,4 +39,30 @@ public class RabbitMQListener {
         log.info("消息队列消费者接收到comment.queue的消息：【"+message+"】");
         sseSession.send(senderName,receiverName, MessageType.COMMENT);
     }
+
+    /**
+     * 监听回复消息队列的消息
+     * @param message 消息内容
+     * @throws IOException 发送消息时可能抛出IO异常
+     */
+    @RabbitListener(queues = "reply.queue")
+    public void listenReplyQueue(Message message) throws IOException {
+        String senderName = userMapper.getById(message.getSenderId()).getUsername();
+        String receiverName = userMapper.getById(message.getReceiverId()).getUsername();
+        log.info("消息队列消费者接收到comment.queue的消息：【"+message+"】");
+        sseSession.send(senderName,receiverName,MessageType.REPLY);
+    }
+
+    /**
+     * 监听收藏消息队列的消息
+     * @param message 消息内容
+     * @throws IOException 发送消息时可能抛出IO异常
+     */
+    @RabbitListener(queues = "favorite.queue")
+    public void listenFavoriteQueue(Message message) throws IOException {
+        String senderName = userMapper.getById(message.getSenderId()).getUsername();
+        String receiverName = userMapper.getById(message.getReceiverId()).getUsername();
+        log.info("消息队列消费者接收到favorite.queue的消息：【"+message+"】");
+        sseSession.send(senderName,receiverName,MessageType.FAVORITE);
+    }
 }

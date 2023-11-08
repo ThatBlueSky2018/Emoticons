@@ -2,10 +2,12 @@ package org.pancakeapple.service.impl;
 
 import org.pancakeapple.annotation.AutoDecrease;
 import org.pancakeapple.annotation.AutoIncrease;
+import org.pancakeapple.annotation.SendMessage;
 import org.pancakeapple.constant.PromptConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.entity.interaction.Favorite;
 import org.pancakeapple.enumeration.BehaviorType;
+import org.pancakeapple.enumeration.MessageType;
 import org.pancakeapple.exception.DuplicateFavoriteException;
 import org.pancakeapple.exception.HasPublicFavoritesException;
 import org.pancakeapple.exception.NoFavoriteException;
@@ -34,6 +36,7 @@ public class FavoriteServiceImpl implements FavoriteService {
      */
     @Override
     @AutoIncrease(type = BehaviorType.FAVORITE)
+    @SendMessage(messageType = MessageType.FAVORITE)
     public void favorite(Long emojiId) {
         List<Favorite> list = favoriteMapper.getByUserIdAndEmojiId(BaseContext.getCurrentId(), emojiId);
         if(list!=null&&list.size()>0) {

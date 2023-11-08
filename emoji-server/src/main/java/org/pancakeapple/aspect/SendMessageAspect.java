@@ -10,6 +10,7 @@ import org.pancakeapple.annotation.SendMessage;
 import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.interaction.CommentDTO;
+import org.pancakeapple.dto.interaction.ReplyDTO;
 import org.pancakeapple.entity.interaction.Message;
 import org.pancakeapple.enumeration.ContentType;
 import org.pancakeapple.enumeration.MessageType;
@@ -68,6 +69,12 @@ public class SendMessageAspect {
         if(messageType == MessageType.COMMENT) {
             CommentDTO commentDTO = (CommentDTO) args[0];
             addAndSendCommentMessage(commentDTO);
+        } else if (messageType == MessageType.REPLY) {
+            ReplyDTO replyDTO = (ReplyDTO) args[0];
+            addAndSendReplyMessage(replyDTO);
+        } else if (messageType == MessageType.FAVORITE) {
+            Long emojiId = (Long) args[0];
+            addAndSendFavoriteMessage(emojiId);
         }
 
     }
@@ -80,7 +87,7 @@ public class SendMessageAspect {
             return;
         }
         Message message = Message.builder()
-                .messageType(MessageType.COMMENT.toString())
+                .messageType(MessageType.COMMENT)
                 .isRead(0)
                 .senderId(BaseContext.getCurrentId())
                 .receiverId(emojiDetailVO.getCreateUser())
@@ -89,5 +96,45 @@ public class SendMessageAspect {
                 .build();
         messageMapper.insert(message);
         rabbitTemplate.convertAndSend(MessageConstant.COMMENT_QUEUE,message);
+    }
+
+    //抽取方法，此方法功能是构造一条回复消息，并发送到消息队列
+    private void addAndSendReplyMessage(ReplyDTO replyDTO) {
+        Long receiverId = commentMapper.getById(replyDTO.getCommentId()).getCreateUser();  // 消息接收者的id
+
+        //判断是否回复自己的评论
+        if(Objects.equals(receiverId, BaseContext.getCurrentId())) {
+            return;
+        }
+        Message message = Message.builder()
+                .messageType(MessageType.REPLY)
+                .isRead(0)
+                .senderId(BaseContext.getCurrentId())
+                .receiverId(receiverId)
+                .contentType(ContentType.TEXT)
+                .content(replyDTO.getContent())
+                .build();
+        messageMapper.insert(message);
+        rabbitTemplate.convertAndSend(MessageConstant.REPLY_QUEUE,message);
+    }
+
+    //抽取方法，此方法功能是构造一条收藏消息，并发送到消息队列
+    private void addAndSendFavoriteMessage(Long emojiId) {
+        Long receiverId = emojiMapper.getById(emojiId).getCreateUser();
+        Long senderId = BaseContext.getCurrentId();
+        if(Objects.equals(receiverId, senderId)) {
+            return;
+        }
+        Message message= Message.builder()
+                .messageType(MessageType.FAVORITE)
+                .isRead(0)
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .contentType(ContentType.NULL)
+                .content(null)
+                .build();
+
+        messageMapper.insert(message);
+        rabbitTemplate.convertAndSend(MessageConstant.FAVORITE_QUEUE,message);
     }
 }
