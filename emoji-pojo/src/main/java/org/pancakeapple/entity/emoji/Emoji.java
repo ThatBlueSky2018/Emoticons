@@ -19,7 +19,6 @@ public class Emoji {
     private String name;
     private String description;
     private String url;
-    private Long typeId;
     private Integer hits;
     private Integer comments;
     private Integer downloads;
