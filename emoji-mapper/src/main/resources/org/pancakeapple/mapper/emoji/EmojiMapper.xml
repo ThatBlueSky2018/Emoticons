@@ -13,4 +13,10 @@
         on et.tag_id = tt.id
         where et.emoji_id=#{id}
     </select>
+    <select id="getByUserId" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu
+        on te.create_user = tu.id
+        where create_user=#{userId}
+    </select>
 </mapper>

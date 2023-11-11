@@ -25,4 +25,19 @@ public interface EmojiService {
      * @return 详细信息
      */
     EmojiDetailVO getById(Long id);
+
+    /**
+     * 查询自己上传的表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    PageBean getUploaded(PageQueryDTO pageQueryDTO);
+
+    /**
+     * 查询某个用户上传的表情包
+     * @param userId 用户id
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    PageBean getByUserId(Long userId, PageQueryDTO pageQueryDTO);
 }

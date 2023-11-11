@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.constant.DataConstant;
 import org.pancakeapple.constant.StatusConstant;
+import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.entity.emoji.Emoji;
@@ -89,5 +90,30 @@ public class EmojiServiceImpl implements EmojiService {
         List<String> tags = emojiMapper.getTagsById(id);
         emojiDetailVO.setTags(tags);
         return emojiDetailVO;
+    }
+
+    /**
+     * 查询自己上传的表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    @Override
+    public PageBean getUploaded(PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page=emojiMapper.getByUserId(BaseContext.getCurrentId());
+        return new PageBean(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 查询某个用户上传的表情包
+     * @param userId       用户id
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    @Override
+    public PageBean getByUserId(Long userId, PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page = emojiMapper.getByUserId(userId);
+        return new PageBean(page.getTotal(),page.getResult());
     }
 }

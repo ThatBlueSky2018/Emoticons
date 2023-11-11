@@ -73,4 +73,11 @@ public interface EmojiMapper {
      */
     @Update("update tb_emoji set comments=comments+1 where id=#{id}")
     void increaseComment(Long emojiId);
+
+    /**
+     * 根据用户id查询上传的表情包
+     * @param userId 用户id
+     * @return Page
+     */
+    Page<EmojiGeneralVO> getByUserId(Long userId);
 }

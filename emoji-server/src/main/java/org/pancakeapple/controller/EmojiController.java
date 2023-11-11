@@ -66,4 +66,30 @@ public class EmojiController {
         EmojiDetailVO emojiDetailVO=emojiService.getById(id);
         return Result.success(emojiDetailVO);
     }
+    /**
+     * 查询自己上传的表情包(分页查询)
+     * @return 分页查询结果
+     * @param pageQueryDTO 分页查询参数
+     */
+    @GetMapping("/uploaded")
+    @Operation(summary = "查询自己上传的表情包(分页查询)")
+    public Result<PageBean> getUploaded(PageQueryDTO pageQueryDTO) {
+        log.info("查询自己上传的表情包");
+        PageBean pageBean=emojiService.getUploaded(pageQueryDTO);
+        return Result.success(pageBean);
+    }
+
+    /**
+     * 查询某个用户上传的表情包
+     * @param userId 用户id
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    @GetMapping("/queryByUserId")
+    @Operation(summary = "查询某个用户上传的表情包(分页查询)")
+    public Result<PageBean> getByUserId(Long userId,PageQueryDTO pageQueryDTO) {
+        log.info("查询用户上传的表情包，用户id:{}",userId);
+        PageBean pageBean=emojiService.getByUserId(userId,pageQueryDTO);
+        return Result.success(pageBean);
+    }
 }
