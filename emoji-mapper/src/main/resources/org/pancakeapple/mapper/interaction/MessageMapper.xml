@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.pancakeapple.mapper.interaction.MessageMapper">
+
+    <select id="getMessageList" resultType="org.pancakeapple.vo.interaction.MessageGeneralVO">
+        select tm.id,tm.is_read,tm.sender_id,tu.profile_photo,tm.content,tm.create_time
+        from tb_message tm left outer join tb_user tu
+        on tm.sender_id = tu.id
+        where tm.receiver_id=#{receiverId}
+        order by create_time desc
+    </select>
+    <select id="getById" resultType="org.pancakeapple.vo.interaction.MessageDetailVO">
+        select tm.id,tm.message_type,tm.is_read,tm.sender_id,tu.profile_photo,tm.content_type,tm.content,tm.create_time
+        from tb_message tm left outer join tb_user tu
+        on tm.sender_id = tu.id
+        where tm.id=#{id}
+    </select>
+</mapper>
