@@ -58,4 +58,7 @@ public interface TagMapper {
      */
     @Select("select id,name from tb_tag where group_id=#{groupId} and status=1")
     List<TagGeneralVO> getByGroupId(Long groupId);
+
+    @Select("select id from tb_tag where name=#{name}")
+    Long getByName(String name);
 }

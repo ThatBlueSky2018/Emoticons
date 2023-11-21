@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <elasticsearch-client.version>8.7.0</elasticsearch-client.version>
     </properties>
     <dependencies>
         <dependency>
@@ -62,6 +63,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!--Elasticsearch RestClient-->
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>8.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>2.0.1</version>
         </dependency>
     </dependencies>
 

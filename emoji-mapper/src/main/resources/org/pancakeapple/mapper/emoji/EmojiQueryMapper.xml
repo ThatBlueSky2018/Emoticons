@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.pancakeapple.mapper.emoji.EmojiQueryMapper">
+
+    <select id="getStatic" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu on te.create_user = tu.id
+                         left outer join emoji_tag et on te.id = et.emoji_id
+        where et.tag_id=#{staticId}
+    </select>
+    <select id="getDynamic" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu on te.create_user = tu.id
+                         left outer join emoji_tag et on te.id = et.emoji_id
+        where et.tag_id=#{dynamicId}
+    </select>
+    <select id="getLatest" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu
+        on te.create_user = tu.id
+        where te.create_time>#{sevenDaysAgo}
+        order by te.create_time desc
+    </select>
+</mapper>
