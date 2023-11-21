@@ -24,4 +24,11 @@ public interface EmojiQueryService {
      * @return 分页查询结果
      */
     PageBean getLatest(PageQueryDTO pageQueryDTO);
+
+    /**
+     * 查询热门表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    PageBean getPopular(PageQueryDTO pageQueryDTO);
 }

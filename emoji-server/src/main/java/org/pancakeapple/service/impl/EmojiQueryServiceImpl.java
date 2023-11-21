@@ -61,4 +61,16 @@ public class EmojiQueryServiceImpl implements EmojiQueryService {
         Page<EmojiGeneralVO> page=emojiQueryMapper.getLatest(sevenDaysAgo);
         return new PageBean(page.getTotal(),page.getResult());
     }
+
+    /**
+     * 查询热门表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    @Override
+    public PageBean getPopular(PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page = emojiQueryMapper.getPopular();
+        return new PageBean(page.getTotal(),page.getResult());
+    }
 }

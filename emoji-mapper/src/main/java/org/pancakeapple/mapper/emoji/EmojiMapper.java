@@ -80,4 +80,37 @@ public interface EmojiMapper {
      * @return Page
      */
     Page<EmojiGeneralVO> getByUserId(Long userId);
+
+    @Select("select min(hits) from tb_emoji;")
+    Integer getMinHits();
+
+    @Select("select max(hits) from tb_emoji;")
+    Integer getMaxHits();
+
+    @Select("select min(comments) from tb_emoji;")
+    Integer getMinComments();
+
+    @Select("select max(comments) from tb_emoji;")
+    Integer getMaxComments();
+
+    @Select("select min(downloads) from tb_emoji;")
+    Integer getMinDownloads();
+
+    @Select("select max(downloads) from tb_emoji;")
+    Integer getMaxDownloads();
+
+    @Select("select min(favorite) from tb_emoji;")
+    Integer getMinFavorite();
+
+    @Select("select max(favorite) from tb_emoji;")
+    Integer getMaxFavorite();
+
+    @Select("select * from tb_emoji limit #{start},#{size};")
+    List<Emoji> page(Integer start,Integer size);
+
+    @Select("select count(*) from tb_emoji;")
+    Long getCount();
+
+    @Update("update tb_emoji set hot_index=#{hotIndex} where id=#{id};")
+    void updateHotIndex(Double hotIndex,Long id);
 }

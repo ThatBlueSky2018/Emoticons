@@ -22,4 +22,10 @@
         where te.create_time>#{sevenDaysAgo}
         order by te.create_time desc
     </select>
+    <select id="getPopular" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu on te.create_user = tu.id
+        where hot_index>=0.2
+        order by hot_index desc
+    </select>
 </mapper>

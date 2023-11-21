@@ -23,6 +23,7 @@ public class Emoji {
     private Integer comments;
     private Integer downloads;
     private Integer favorite;
+    private Double hotIndex;
 
     private Integer status;  //是否通过审核
 

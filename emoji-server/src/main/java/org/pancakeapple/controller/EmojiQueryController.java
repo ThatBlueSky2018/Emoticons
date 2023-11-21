@@ -26,6 +26,19 @@ public class EmojiQueryController {
     private EmojiQueryService emojiQueryService;
 
     /**
+     * 查询热门表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
+    @GetMapping("/popular")
+    @Operation(summary = "查询热门表情包")
+    public Result<PageBean> getPopular(PageQueryDTO pageQueryDTO) {
+        log.info("查询热门表情包");
+        PageBean pageBean = emojiQueryService.getPopular(pageQueryDTO);
+        return Result.success(pageBean);
+    }
+
+    /**
      * 查询静态表情包
      * @param pageQueryDTO 分页查询参数
      * @return 分页查询结果
@@ -38,6 +51,11 @@ public class EmojiQueryController {
         return Result.success(pageBean);
     }
 
+    /**
+     * 查询动态表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
     @GetMapping("/dynamic")
     @Operation(summary = "查询动态表情包")
     public Result<PageBean> getDynamic(PageQueryDTO pageQueryDTO) {
@@ -46,6 +64,11 @@ public class EmojiQueryController {
         return Result.success(pageBean);
     }
 
+    /**
+     * 查询最新表情包
+     * @param pageQueryDTO 分页查询参数
+     * @return 分页查询结果
+     */
     @GetMapping("/latest")
     @Operation(summary = "查询最新的表情包")
     public Result<PageBean> getLatest(PageQueryDTO pageQueryDTO) {

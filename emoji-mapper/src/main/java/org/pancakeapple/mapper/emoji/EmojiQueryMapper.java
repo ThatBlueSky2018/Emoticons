@@ -13,4 +13,6 @@ public interface EmojiQueryMapper {
     Page<EmojiGeneralVO> getDynamic(Long dynamicId);
 
     Page<EmojiGeneralVO> getLatest(LocalDateTime sevenDaysAgo);
+
+    Page<EmojiGeneralVO> getPopular();
 }
