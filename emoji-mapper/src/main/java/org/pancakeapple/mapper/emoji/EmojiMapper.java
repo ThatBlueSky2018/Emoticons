@@ -39,6 +39,9 @@ public interface EmojiMapper {
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
 
+    @Select("select * from tb_emoji where id=#{id}")
+    Emoji getEmojiById(Long id);
+
     /**
      * 根据id查询表情包具有的标签列表
      * @param id 表情包id

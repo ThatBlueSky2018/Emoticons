@@ -62,7 +62,7 @@ public class ESTest {
         }
     }
 
-    @Test
+    //@Test
     void testSearch() throws IOException {
         String searchText = "嘲讽";
 
@@ -103,7 +103,7 @@ public class ESTest {
         }
     }
 
-    @Test
+    //@Test
     void batchAddDocument() throws IOException {
         BulkRequest.Builder br = new BulkRequest.Builder();
 

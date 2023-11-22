@@ -2,8 +2,12 @@ package org.pancakeapple.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.pancakeapple.algorithm.PopularAlgorithm;
+import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.dto.search.UpdateDocumentDTO;
 import org.pancakeapple.entity.emoji.Emoji;
+import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,6 +21,9 @@ import java.util.List;
 public class HotIndexTask {
     @Autowired
     private EmojiMapper emojiMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Scheduled(cron = "0 0 2 * * ?")
     public void updateHotIndex() {
@@ -45,6 +52,12 @@ public class HotIndexTask {
                 double timeDecay = PopularAlgorithm.timeDecay(duration.toDays());
                 Double hotIndex = PopularAlgorithm.calculateHotIndex(hits_normalization, comments_normalization, downloads_normalization, favorite_normalization, timeDecay);
                 emojiMapper.updateHotIndex(hotIndex,emoji.getId());
+
+                UpdateDocumentDTO updateDocumentDTO = UpdateDocumentDTO.builder()
+                        .id(emoji.getId())
+                        .behaviorType(BehaviorType.CALCULATE_HOT_INDEX)
+                        .build();
+                rabbitTemplate.convertAndSend(MessageConstant.ES_UPDATE_QUEUE,updateDocumentDTO);
             }
         }
     }

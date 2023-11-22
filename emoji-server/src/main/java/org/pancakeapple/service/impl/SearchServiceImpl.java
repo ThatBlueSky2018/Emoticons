@@ -89,7 +89,7 @@ public class SearchServiceImpl implements SearchService {
     //指定排序方式的搜索
     private SearchResponse<EmojiDoc> sortSearch(SearchParams searchParams, Query all,Query kind) throws IOException {
         return client.search(s -> s
-                        .index("emoji")
+                        .index(DataConstant.ES_INDEX_NAME)
                         .query(q->q
                                 .bool(b->b
                                         .must(all)
@@ -107,7 +107,7 @@ public class SearchServiceImpl implements SearchService {
     //默认排序方式的搜索
     private SearchResponse<EmojiDoc> scoreSearch(SearchParams searchParams,Query all,Query kind) throws IOException {
         return client.search(s -> s
-                        .index("emoji")
+                        .index(DataConstant.ES_INDEX_NAME)
                         .query(q->q
                                 .bool(b->b
                                         .must(all)

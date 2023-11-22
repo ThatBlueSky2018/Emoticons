@@ -7,8 +7,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.pancakeapple.annotation.AutoDecrease;
+import org.pancakeapple.constant.MessageConstant;
+import org.pancakeapple.dto.search.UpdateDocumentDTO;
 import org.pancakeapple.enumeration.BehaviorType;
 import org.pancakeapple.mapper.emoji.EmojiMapper;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,9 @@ import org.springframework.stereotype.Component;
 public class AutoDecreaseAspect {
    @Autowired
     private EmojiMapper emojiMapper;
+
+   @Autowired
+   private RabbitTemplate rabbitTemplate;
 
     /**
      * 切入点
@@ -46,6 +52,11 @@ public class AutoDecreaseAspect {
         //3.根据不同的操作，完成自动减少
         if (behaviorType == BehaviorType.FAVORITE) {
             emojiMapper.decreaseFavorite((Long)args[0]);
+            UpdateDocumentDTO updateDocumentDTO = UpdateDocumentDTO.builder()
+                    .id((Long)args[0])
+                    .behaviorType(behaviorType)
+                    .build();
+            rabbitTemplate.convertAndSend(MessageConstant.ES_UPDATE_QUEUE,updateDocumentDTO);
             log.info("表情包收藏量自动增长：{}",args[0]);
         }
     }

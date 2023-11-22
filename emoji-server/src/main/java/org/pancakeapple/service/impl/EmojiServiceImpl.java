@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.pancakeapple.annotation.AutoIncrease;
 import org.pancakeapple.constant.DataConstant;
+import org.pancakeapple.constant.MessageConstant;
 import org.pancakeapple.constant.StatusConstant;
 import org.pancakeapple.context.BaseContext;
 import org.pancakeapple.dto.emoji.EmojiUploadDTO;
@@ -17,6 +18,7 @@ import org.pancakeapple.result.PageBean;
 import org.pancakeapple.service.EmojiService;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
 import org.pancakeapple.vo.emoji.EmojiGeneralVO;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class EmojiServiceImpl implements EmojiService {
 
     @Autowired
     private EmojiTagMapper emojiTagMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 表情包上传
@@ -54,7 +59,6 @@ public class EmojiServiceImpl implements EmojiService {
 
         //2.向表情包与标签的对应关系表中插入若干条数据
         //接收到前端的数据中，标签列表是id列表
-        // TODO 后续是否需要改成标签名列表？代码是否需要优化？
         List<Long> tags= emojiUploadDTO.getTags();
         if(tags!=null && tags.size()>0) {
             tags.forEach(tag -> {
@@ -64,6 +68,9 @@ public class EmojiServiceImpl implements EmojiService {
                 emojiTagMapper.insert(emojiTag);
             });
         }
+
+        //3.通知RabbitMQ,向搜索引擎中添加一条数据
+        rabbitTemplate.convertAndSend(MessageConstant.ES_POST_QUEUE,emoji.getId());
     }
 
     /**
