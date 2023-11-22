@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class ESConfig {
     @Value("${elasticsearch.host}")
@@ -29,5 +32,14 @@ public class ESConfig {
 
         // And create the API client
         return new ElasticsearchClient(transport);
+    }
+
+    @Bean
+    public Map<Integer,String> sortMappings() {
+        Map<Integer,String> sortMappings=new HashMap<>();
+        sortMappings.put(1,"hits");
+        sortMappings.put(2,"comments");
+        sortMappings.put(3,"favorite");
+        return sortMappings;
     }
 }

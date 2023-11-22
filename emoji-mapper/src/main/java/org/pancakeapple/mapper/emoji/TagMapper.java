@@ -61,4 +61,7 @@ public interface TagMapper {
 
     @Select("select id from tb_tag where name=#{name}")
     Long getByName(String name);
+
+    @Select("select id,name from tb_tag where id=#{id}")
+    Tag getById(Long id);
 }

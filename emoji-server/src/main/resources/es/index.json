@@ -1,0 +1,65 @@
+{
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "copy_to": "all"
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "copy_to": "all"
+      },
+      "url": {
+        "type": "keyword",
+        "index": false
+      },
+      "tags": {
+        "type": "text",
+        "analyzer": "ik_max_word",
+        "copy_to": "all"
+      },
+      "hits": {
+        "type": "integer",
+        "index": false
+      },
+      "comments": {
+        "type": "integer",
+        "index": false
+      },
+      "downloads": {
+        "type": "integer",
+        "index": false
+      },
+      "favorite": {
+        "type": "integer",
+        "index": false
+      },
+      "hotIndex":{
+        "type": "double",
+        "index": false
+      },
+      "createUser": {
+        "type": "long",
+        "index": false
+      },
+      "createTime":{
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+        "index": false
+      },
+      "profilePhoto": {
+        "type": "keyword",
+        "index": false
+      },
+      "all":{
+        "type": "text",
+        "analyzer": "ik_max_word"
+      }
+    }
+  }
+}

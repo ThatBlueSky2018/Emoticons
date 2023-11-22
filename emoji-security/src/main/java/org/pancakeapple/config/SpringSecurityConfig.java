@@ -87,6 +87,13 @@ public class SpringSecurityConfig {
 
                 auth.requestMatchers("/comment","/comment/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers("/message","message/**").hasAuthority(RBACConstant.USER_ROLE);
+
+                auth.requestMatchers("/query","/query/**").permitAll();
+
+                auth.requestMatchers("/search","/search/**").hasAuthority(RBACConstant.USER_ROLE);
+
+
                 auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",
                         "/swagger-resources/**","/**","/v3/api-docs").permitAll();
             })

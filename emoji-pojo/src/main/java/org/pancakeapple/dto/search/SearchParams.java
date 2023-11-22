@@ -21,4 +21,7 @@ public class SearchParams {
 
     @Schema(description = "每页数量",defaultValue = "10",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer pageSize;
+
+    @Schema(description = "排序方式(0,1,2,3)",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer sort;
 }

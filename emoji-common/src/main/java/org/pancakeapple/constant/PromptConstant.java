@@ -31,4 +31,6 @@ public class PromptConstant {
     public static final String COMMENT_SUCCESS="评论成功!";
     public static final String REPLY_SUCCESS="回复成功!";
     public static final String NOT_TOP_COMMENT="该评论不是楼主评论!";
+
+    public static final String NO_SEARCH_RESULT="没有找到匹配的搜索结果!";
 }
