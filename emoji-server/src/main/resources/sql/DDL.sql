@@ -101,6 +101,7 @@ create table tb_emoji (
     downloads int default 0 comment '下载量',
     favorite int default 0 comment'收藏量',
     hot_index double not null default 0.0 comment '热门指数',
+    similar_list varchar(256) default null comment '相似表情包列表',
 
     status int not null default 1 comment '审核状态',
 
