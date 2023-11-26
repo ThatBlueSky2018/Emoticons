@@ -66,18 +66,18 @@ public class SpringSecurityConfig {
                 //注意：配置在前面的先起到效果！
                 auth.requestMatchers("/user/login").permitAll();
                 auth.requestMatchers("/user/register").permitAll();
-                auth.requestMatchers("/user/user").hasAuthority(RBACConstant.USER_ROLE);
-                auth.requestMatchers("/user/admin").hasAuthority(RBACConstant.ADMIN_ROLE);
-                auth.requestMatchers("/user/**").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers(HttpMethod.GET,"/user/**").permitAll();
+                auth.requestMatchers(HttpMethod.PUT,"/user/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers(HttpMethod.POST,"/tagGroup").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers(HttpMethod.DELETE,"/tagGroup/**").hasAuthority(RBACConstant.ADMIN_ROLE);
                 auth.requestMatchers("/tagGroup/list").hasAuthority(RBACConstant.USER_ROLE);
 
-                auth.requestMatchers(HttpMethod.POST,"/tag").hasAuthority(RBACConstant.ADMIN_ROLE);
+                auth.requestMatchers(HttpMethod.POST,"/tag").permitAll();
                 auth.requestMatchers(HttpMethod.DELETE,"/tag/**").hasAuthority(RBACConstant.ADMIN_ROLE);
-                auth.requestMatchers("/tag","/tag/**").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers(HttpMethod.GET,"/tag","/tag/**").hasAuthority(RBACConstant.USER_ROLE);
 
+                auth.requestMatchers(HttpMethod.GET,"/emoji/uploaded").hasAuthority(RBACConstant.USER_ROLE);
                 auth.requestMatchers(HttpMethod.GET,"/emoji","/emoji/**").permitAll();
                 auth.requestMatchers("/emoji","/emoji/**").hasAuthority(RBACConstant.USER_ROLE);
 
@@ -85,13 +85,14 @@ public class SpringSecurityConfig {
 
                 auth.requestMatchers("/favorite","/favorite/**").hasAuthority(RBACConstant.USER_ROLE);
 
-                auth.requestMatchers("/comment","/comment/**").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers(HttpMethod.GET,"/comment","/comment/**").permitAll();
+                auth.requestMatchers(HttpMethod.POST,"/comment","/comment/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/message","message/**").hasAuthority(RBACConstant.USER_ROLE);
 
                 auth.requestMatchers("/query","/query/**").permitAll();
 
-                auth.requestMatchers("/search","/search/**").hasAuthority(RBACConstant.USER_ROLE);
+                auth.requestMatchers("/search","/search/**").permitAll();
 
 
                 auth.requestMatchers("/doc.html","/webjars/**","/swagger-ui.html","/img.icons/**",

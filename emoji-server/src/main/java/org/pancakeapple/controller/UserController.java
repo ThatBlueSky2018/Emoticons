@@ -85,16 +85,4 @@ public class UserController {
         return Result.success(PromptConstant.UPDATE_SUCCESS);
     }
 
-    @GetMapping("/user")
-    public Result<String> user() {
-        System.out.println("UserController user...");
-        return Result.success("OK");
-    }
-
-    @GetMapping("/admin")
-    public Result<String> admin() {
-        System.out.println("UserController admin...");
-        return Result.success("OK");
-    }
-
 }

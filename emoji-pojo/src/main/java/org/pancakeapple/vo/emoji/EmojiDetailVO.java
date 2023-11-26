@@ -49,4 +49,7 @@ public class EmojiDetailVO {
 
     @Schema(description = "标签列表",defaultValue = "['标签1','标签2']",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private List<String> tags;
+
+    @Schema(description = "相似表情包列表(字符串类型)",defaultValue = "1,2,3",requiredMode = Schema.RequiredMode.REQUIRED)
+    private String similarList;
 }

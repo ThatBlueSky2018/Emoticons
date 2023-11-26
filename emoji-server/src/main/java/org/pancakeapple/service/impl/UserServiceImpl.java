@@ -7,6 +7,8 @@ import org.pancakeapple.dto.user.LoginDTO;
 import org.pancakeapple.dto.user.RegisterDTO;
 import org.pancakeapple.dto.user.UserInfoDTO;
 import org.pancakeapple.exception.UserNameExistException;
+import org.pancakeapple.mapper.emoji.EmojiMapper;
+import org.pancakeapple.mapper.interaction.FavoriteMapper;
 import org.pancakeapple.mapper.user.RoleMapper;
 import org.pancakeapple.mapper.user.UserMapper;
 import org.pancakeapple.mapper.user.UserRoleMapper;
@@ -47,6 +49,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmojiMapper emojiMapper;
+
+    @Autowired
+    private FavoriteMapper favoriteMapper;
 
     /**
      * 用户登录
@@ -136,7 +144,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserInfoVO getById(Long id) {
-        return userMapper.getById(id);
+        UserInfoVO userInfo = userMapper.getById(id);
+        Integer uploadCount = emojiMapper.getUploadCountByUserId(id);
+        userInfo.setUploadCount(uploadCount);
+        Integer favoriteCount = favoriteMapper.getFavoriteCountByUserId(id);
+        userInfo.setFavoriteCount(favoriteCount);
+        return userInfo;
     }
 
     /**

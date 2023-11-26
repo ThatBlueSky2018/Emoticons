@@ -11,8 +11,11 @@ import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.EmojiService;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
+import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 表情包相关接口
@@ -91,5 +94,31 @@ public class EmojiController {
         log.info("查询用户上传的表情包，用户id:{}",userId);
         PageBean pageBean=emojiService.getByUserId(userId,pageQueryDTO);
         return Result.success(pageBean);
+    }
+
+    /**
+     * 下载表情包
+     * @param emojiId  表情包id
+     * @return 提示信息
+     */
+    @PutMapping("/download")
+    @Operation(summary = "下载表情包(下载量+1即可)")
+    public Result<String> download(Long emojiId) {
+        log.info("下载表情包：{}",emojiId);
+        emojiService.download(emojiId);
+        return Result.success(PromptConstant.DOWNLOAD_SUCCESS);
+    }
+
+    /**
+     * 根据相似列表查看相似表情包
+     * @param similarList 相似id列表[1,2,3]
+     * @return 表情包列表
+     */
+    @GetMapping("/similar")
+    @Operation(summary = "根据相似列表查看相似表情包(需要提前转换好类型)")
+    public Result<List<EmojiGeneralVO>> getSimilar(@RequestParam List<Long> similarList) {
+        log.info("查询相似表情包列表：{}",similarList);
+        List<EmojiGeneralVO> similarEmojiList = emojiService.getSimilar(similarList);
+        return Result.success(similarEmojiList);
     }
 }

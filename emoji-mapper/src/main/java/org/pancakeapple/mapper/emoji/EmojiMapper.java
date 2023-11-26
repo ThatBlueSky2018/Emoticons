@@ -35,7 +35,7 @@ public interface EmojiMapper {
      * @param id 主键id
      * @return 详细信息
      */
-    @Select("select id,name,description,url,hits,comments,downloads,favorite,create_user,create_time " +
+    @Select("select id,name,description,url,hits,comments,downloads,favorite,similar_list,create_user,create_time " +
             "from tb_emoji where id=#{id}")
     EmojiDetailVO getById(Long id);
 
@@ -83,6 +83,28 @@ public interface EmojiMapper {
      * @return Page
      */
     Page<EmojiGeneralVO> getByUserId(Long userId);
+
+    /**
+     * 根据用户id查询其上传的表情包数量
+     * @param userId 用户id
+     * @return 上传的表情包数量
+     */
+    @Select("select count(id) from tb_emoji where create_user=#{userId}")
+    Integer getUploadCountByUserId(Long userId);
+
+    /**
+     * 下载一个表情包
+     * @param emojiId 表情包id
+     */
+    @Update("update tb_emoji set downloads=downloads+1 where id=#{emojiId}")
+    void download(Long emojiId);
+
+    /**
+     * 查询相似表情包列表
+     * @param similarList 相似id列表
+     * @return 表情包列表
+     */
+    List<EmojiGeneralVO> getSimilar(List<Long> similarList);
 
     @Select("select min(hits) from tb_emoji;")
     Integer getMinHits();

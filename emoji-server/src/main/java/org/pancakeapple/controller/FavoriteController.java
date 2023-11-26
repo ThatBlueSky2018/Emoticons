@@ -9,13 +9,8 @@ import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.result.Result;
 import org.pancakeapple.service.FavoriteService;
-import org.pancakeapple.vo.emoji.EmojiGeneralVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -33,7 +28,6 @@ public class FavoriteController {
      */
     @PostMapping
     @Operation (summary = "收藏表情包")
-    @CacheEvict(cacheNames = "favoriteList", key = "T(org.pancakeapple.context.BaseContext).getCurrentId()")
     public Result<String> favorite(Long emojiId) {
         log.info("用户收藏表情包：{}",emojiId);
         favoriteService.favorite(emojiId);
@@ -45,12 +39,11 @@ public class FavoriteController {
      * @return 收藏列表
      */
     @GetMapping
-    @Operation(summary = "查看收藏列表")
-    @Cacheable(cacheNames = "favoriteList", key = "T(org.pancakeapple.context.BaseContext).getCurrentId()")
-    public Result<List<EmojiGeneralVO>> list() {
+    @Operation(summary = "查看收藏列表(分页查询)")
+    public Result<PageBean> list(PageQueryDTO pageQueryDTO) {
         log.info("用户查看收藏列表");
-        List<EmojiGeneralVO> list=favoriteService.list();
-        return Result.success(list);
+        PageBean pageBean=favoriteService.list(pageQueryDTO);
+        return Result.success(pageBean);
     }
 
     /**
@@ -60,7 +53,6 @@ public class FavoriteController {
      */
     @DeleteMapping
     @Operation(summary = "取消收藏")
-    @CacheEvict(cacheNames = "favoriteList", key = "T(org.pancakeapple.context.BaseContext).getCurrentId()")
     public Result<String> cancelFavorite(Long emojiId) {
         log.info("用户取消收藏，表情包id:{}",emojiId);
         favoriteService.cancelFavorite(emojiId);
@@ -81,7 +73,7 @@ public class FavoriteController {
     }
 
     @GetMapping("/list/{userId}")
-    @Operation(summary = "分页查询其他用户的收藏夹")
+    @Operation(summary = "查询其他用户的收藏夹(分页查询)")
     public Result<PageBean> getOtherFavoriteList(@PathVariable Long userId, PageQueryDTO pageQueryDTO) {
         log.info("查询某个用户的收藏列表：{}",userId);
         return Result.success(favoriteService.getOtherFavoriteList(userId,pageQueryDTO));

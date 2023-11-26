@@ -40,6 +40,12 @@ public class UserInfoVO {
     @Schema(description = "是否公开收藏夹",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer publicFavorite;
 
+    @Schema(description = "用户上传表情包数量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer uploadCount;
+
+    @Schema(description = "用户收藏表情包数量",defaultValue = "0",requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer favoriteCount;
+
     @Schema(description = "注册时间",defaultValue = "2023-10-01 00:00:00",requiredMode = Schema.RequiredMode.REQUIRED)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;

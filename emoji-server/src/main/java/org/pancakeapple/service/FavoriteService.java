@@ -2,9 +2,6 @@ package org.pancakeapple.service;
 
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.result.PageBean;
-import org.pancakeapple.vo.emoji.EmojiGeneralVO;
-
-import java.util.List;
 
 public interface FavoriteService {
     /**
@@ -17,7 +14,7 @@ public interface FavoriteService {
      * 用户查看收藏列表
      * @return 收藏列表
      */
-    List<EmojiGeneralVO> list();
+    PageBean list(PageQueryDTO pageQueryDTO);
 
     /**
      * 用户取消收藏

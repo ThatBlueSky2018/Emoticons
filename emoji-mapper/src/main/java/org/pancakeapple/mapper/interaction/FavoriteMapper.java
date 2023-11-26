@@ -34,7 +34,7 @@ public interface FavoriteMapper {
      * @param userId 用户id
      * @return 收藏列表
      */
-    List<EmojiGeneralVO> list(Long userId);
+    Page<EmojiGeneralVO> list(Long userId);
 
     /**
      * 用户取消收藏
@@ -45,4 +45,12 @@ public interface FavoriteMapper {
     void deleteByUserIdAndEmojiId(Long userId, Long emojiId);
 
     Page<EmojiGeneralVO> getOtherFavoriteList(Long userId);
+
+    /**
+     * 根据用户id查询收藏的表情包数量
+     * @param userId 用户id
+     * @return 收藏的表情包数量
+     */
+    @Select("select count(id) from emoticons.tb_favorite where user_id=#{userId}")
+    Integer getFavoriteCountByUserId(Long userId);
 }

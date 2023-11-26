@@ -4,6 +4,9 @@ import org.pancakeapple.dto.emoji.EmojiUploadDTO;
 import org.pancakeapple.dto.emoji.PageQueryDTO;
 import org.pancakeapple.result.PageBean;
 import org.pancakeapple.vo.emoji.EmojiDetailVO;
+import org.pancakeapple.vo.emoji.EmojiGeneralVO;
+
+import java.util.List;
 
 public interface EmojiService {
     /**
@@ -40,4 +43,17 @@ public interface EmojiService {
      * @return 分页查询结果
      */
     PageBean getByUserId(Long userId, PageQueryDTO pageQueryDTO);
+
+    /**
+     * 下载表情包
+     * @param emojiId 表情包id
+     */
+    void download(Long emojiId);
+
+    /**
+     * 根据相似列表查询相似表情包
+     * @param similarList 相似id列表
+     * @return 表情包列表
+     */
+    List<EmojiGeneralVO> getSimilar(List<Long> similarList);
 }

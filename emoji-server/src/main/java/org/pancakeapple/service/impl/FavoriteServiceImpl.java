@@ -60,8 +60,10 @@ public class FavoriteServiceImpl implements FavoriteService {
      * @return 收藏列表
      */
     @Override
-    public List<EmojiGeneralVO> list() {
-        return favoriteMapper.list(BaseContext.getCurrentId());
+    public PageBean list(PageQueryDTO pageQueryDTO) {
+        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
+        Page<EmojiGeneralVO> page = favoriteMapper.list(BaseContext.getCurrentId());
+        return new PageBean(page.getTotal(), page.getResult());
     }
 
     /**

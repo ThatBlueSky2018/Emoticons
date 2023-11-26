@@ -19,4 +19,12 @@
         on te.create_user = tu.id
         where create_user=#{userId}
     </select>
+    <select id="getSimilar" resultType="org.pancakeapple.vo.emoji.EmojiGeneralVO">
+        select te.id,te.name,te.url,te.create_user,tu.profile_photo
+        from tb_emoji te left outer join tb_user tu on te.create_user = tu.id
+        where te.id in 
+        <foreach collection="similarList" item="emojiId" separator="," open="(" close=")">
+            #{emojiId}
+        </foreach>
+    </select>
 </mapper>

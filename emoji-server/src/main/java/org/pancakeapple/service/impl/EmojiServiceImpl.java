@@ -123,4 +123,24 @@ public class EmojiServiceImpl implements EmojiService {
         Page<EmojiGeneralVO> page = emojiMapper.getByUserId(userId);
         return new PageBean(page.getTotal(),page.getResult());
     }
+
+    /**
+     * 下载表情包
+     * 下载量+1即可
+     * @param emojiId 表情包id
+     */
+    @Override
+    public void download(Long emojiId) {
+        emojiMapper.download(emojiId);
+    }
+
+    /**
+     * 根据相似列表查询相似表情包
+     * @param similarList 相似id列表
+     * @return 表情包列表
+     */
+    @Override
+    public List<EmojiGeneralVO> getSimilar(List<Long> similarList) {
+        return emojiMapper.getSimilar(similarList);
+    }
 }
