@@ -3,7 +3,6 @@ package org.pancakeapple.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class UpdateSimilarTask {
     @Value("${spring.task.script-path}")
     private String scriptPath;
 
-    @Scheduled(cron = "0 0 4 * * ?")
+    //@Scheduled(cron = "0 0 3 ? * 1")
     public void updateEmojiSimilarities() {
         try {
             log.info("开始定时更新相似表情包列表...");

@@ -105,6 +105,9 @@ public class EmojiController {
     @Operation(summary = "下载表情包(下载量+1即可)")
     public Result<String> download(Long emojiId) {
         log.info("下载表情包：{}",emojiId);
+        if(emojiId == null) {
+            return Result.error(PromptConstant.NULL_ID);
+        }
         emojiService.download(emojiId);
         return Result.success(PromptConstant.DOWNLOAD_SUCCESS);
     }

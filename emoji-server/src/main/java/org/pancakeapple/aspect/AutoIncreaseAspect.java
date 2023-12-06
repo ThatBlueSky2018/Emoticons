@@ -85,6 +85,12 @@ public class AutoIncreaseAspect {
                     .build();
             rabbitTemplate.convertAndSend(MessageConstant.ES_UPDATE_QUEUE,updateDocumentDTO);
             log.info("表情包评论数量自动增长：{}",args[0]);
+        } else if (behaviorType == BehaviorType.DOENLOAD) {
+            UpdateDocumentDTO updateDocumentDTO = UpdateDocumentDTO.builder()
+                    .id((Long) args[0])
+                    .behaviorType(behaviorType)
+                    .build();
+            rabbitTemplate.convertAndSend(MessageConstant.ES_UPDATE_QUEUE,updateDocumentDTO);
         }
     }
 }

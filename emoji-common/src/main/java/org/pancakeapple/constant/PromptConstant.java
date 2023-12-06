@@ -19,6 +19,7 @@ public class PromptConstant {
 
     public static final String EMOJI_UPLOAD_SUCCESS="表情包上传成功!";
     public static final String DOWNLOAD_SUCCESS="下载成功!";
+    public static final String NULL_ID="id为空!";
 
     public static final String FAVORITE_SUCCESS="收藏成功!";
     public static final String CANCEL_FAVORITE_SUCCESS="取消收藏成功!";

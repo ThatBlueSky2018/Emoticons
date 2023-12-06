@@ -28,6 +28,7 @@ public class EmojiDoc {
     private Integer downloads;
     private Integer favorite;
     private Double hotIndex;
+    private String similarList;
 
     private Long createUser; //上传者
 
@@ -47,6 +48,7 @@ public class EmojiDoc {
         this.downloads = emoji.getDownloads();
         this.favorite = emoji.getFavorite();
         this.hotIndex = emoji.getHotIndex();
+        this.similarList = emoji.getSimilarList();
         this.createUser = emoji.getCreateUser();
         this.createTime = emoji.getCreateTime();
     }

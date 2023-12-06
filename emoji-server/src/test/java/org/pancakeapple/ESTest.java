@@ -2,10 +2,7 @@ package org.pancakeapple;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch.core.BulkRequest;
-import co.elastic.clients.elasticsearch.core.BulkResponse;
-import co.elastic.clients.elasticsearch.core.GetResponse;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.*;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
@@ -47,11 +44,11 @@ public class ESTest {
         System.out.println(client);
     }
 
-    @Test
+    //@Test
     void testGetById() throws IOException {
         GetResponse<EmojiDoc> response = client.get(g -> g
                         .index("emoji")
-                        .id("1"),
+                        .id("672"),
                 EmojiDoc.class
         );
 
@@ -107,7 +104,7 @@ public class ESTest {
     void batchAddDocument() throws IOException {
         BulkRequest.Builder br = new BulkRequest.Builder();
 
-        List<Emoji> emojiList = emojiMapper.page(0, 100);
+        List<Emoji> emojiList = emojiMapper.page(1000, 368);
         emojiList.forEach(emoji->{
             EmojiDoc emojiDoc = new EmojiDoc(emoji);
             emojiDoc.setProfilePhoto(userMapper.getById(emoji.getCreateUser()).getProfilePhoto());

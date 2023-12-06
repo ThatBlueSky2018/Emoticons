@@ -130,6 +130,7 @@ public class EmojiServiceImpl implements EmojiService {
      * @param emojiId 表情包id
      */
     @Override
+    @AutoIncrease(type = BehaviorType.DOENLOAD)
     public void download(Long emojiId) {
         emojiMapper.download(emojiId);
     }
