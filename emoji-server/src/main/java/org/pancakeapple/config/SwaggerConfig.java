@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Emoticons表情包资源共享平台接口文档")
+                        .title("EmoVerse接口文档")
                         .version("1.0")
                         .description( "用于快速实现前后端联调")
                         .termsOfService("https://doc.xiaominfo.com")

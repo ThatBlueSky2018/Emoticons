@@ -23,7 +23,7 @@ public class RabbitMQListener {
     @Autowired
     private SseSession sseSession;
 
-    @RabbitListener(queues = "test.queue")
+    //@RabbitListener(queues = "test.queue")
     public void listenSimpleQueue(String msg) {
         System.out.println("消费者接收到test.queue的消息:【"+msg+"】");
     }

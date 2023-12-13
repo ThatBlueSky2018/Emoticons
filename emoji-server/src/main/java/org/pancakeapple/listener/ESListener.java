@@ -17,7 +17,6 @@ import org.pancakeapple.mapper.emoji.TagMapper;
 import org.pancakeapple.mapper.user.UserMapper;
 import org.pancakeapple.vo.user.UserInfoVO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -61,8 +60,7 @@ public class ESListener {
             tagList.add(tag.getName());
         });
         String tags = String.join(",", tagList);
-        EmojiDoc emojiDoc = new EmojiDoc();
-        BeanUtils.copyProperties(emoji,emojiDoc);
+        EmojiDoc emojiDoc = new EmojiDoc(emoji);
         emojiDoc.setTags(tags);
         emojiDoc.setProfilePhoto(createUser.getProfilePhoto());
 
