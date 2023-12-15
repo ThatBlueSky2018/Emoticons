@@ -2,6 +2,7 @@ package org.pancakeapple.utils;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import org.pancakeapple.exception.FileFormatErrorException;
 import org.pancakeapple.properties.AliOSSProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -33,6 +35,10 @@ public class AliOSSUtils {
         // 避免文件覆盖
         String originalFilename = file.getOriginalFilename();
         String fileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+        if(!Objects.equals(fileName.split("\\.")[1], "jpg") && !Objects.equals(fileName.split("\\.")[1], "jpeg")
+            && !Objects.equals(fileName.split("\\.")[1], "png")) {
+            throw new FileFormatErrorException("文件格式不支持！");
+        }
 
         //上传文件到 OSS
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
