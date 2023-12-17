@@ -93,7 +93,7 @@ create table tb_tag (
 -- status：0表示未通过审核，1表示通过审核
 create table tb_emoji (
     id bigint primary key auto_increment comment '主键',
-    name varchar(32) not null comment '表情包名称',
+    name varchar(1024) not null comment '表情包名称',
     description text default null comment '表情包描述',
     url varchar(512) not null comment '存储路径',
     hits int default 0 comment '点击量',
