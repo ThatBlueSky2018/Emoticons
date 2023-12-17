@@ -1,0 +1,30 @@
+emoji:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://hostname:3306/emoticons
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: hostname
+      port: 6379
+      password: 123456
+      database: 0
+  aliyun:
+    oss:
+      endpoint: https://oss-cn-beijing.aliyuncs.com
+      accessKeyId: xxxxxx
+      accessKeySecret: xxxxxx
+      bucketName: xxxxxx
+  rabbitmq:
+    host: hostname
+    port: 5672
+    username: root
+    password: 123456
+    virtual-host: /
+  elasticsearch:
+    host: hostname
+    port: 9200
+  task:
+    command: python3
+    script-path: /usr/src/update_emoji_similarities/main.py

@@ -1,0 +1,59 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driver-class-name: ${emoji.datasource.driver-class-name}
+    url: ${emoji.datasource.url}
+    username: ${emoji.datasource.username}
+    password: ${emoji.datasource.password}
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 1
+      max-active: 10
+      min-idle: 1
+  data:
+    redis:
+      host: ${emoji.data.redis.host}
+      port: ${emoji.data.redis.port}
+      password: ${emoji.data.redis.password}
+      database: ${emoji.data.redis.database}
+  rabbitmq:
+    host: ${emoji.rabbitmq.host}
+    port: ${emoji.rabbitmq.port}
+    username: ${emoji.rabbitmq.username}
+    password: ${emoji.rabbitmq.password}
+    virtual-host: ${emoji.rabbitmq.virtual-host}
+    listener:
+      simple:
+        prefetch: 1
+  task:
+    command: ${emoji.task.command}
+    script-path: ${emoji.task.script-path}
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+knife4j:
+  enable: true
+  setting:
+    enable-dynamic-parameter: true
+
+logging:
+  level:
+    org:
+      pancakeapple:
+        mapper: debug
+        service: info
+        controller: info
+
+aliyun:
+  oss:
+    endpoint: ${emoji.aliyun.oss.endpoint}
+    accessKeyId: ${emoji.aliyun.oss.accessKeyId}
+    accessKeySecret: ${emoji.aliyun.oss.accessKeySecret}
+    bucketName: ${emoji.aliyun.oss.bucketName}
+
+elasticsearch:
+  host: ${emoji.elasticsearch.host}
+  port: ${emoji.elasticsearch.port}
