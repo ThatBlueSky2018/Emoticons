@@ -11,11 +11,21 @@ EmoVerse(表情宇宙)旨在提供一个表情包平台，用户可以自由地�
 * 使用新版本开发。本项目不拘泥于传统的“你发任你发，我用Java8”，而是使用Java17与SpringBoot3，紧跟最新技术发展
 * 功能丰富。本项目绝不止简单的CRUD，而是使用了大量的技术栈，业务逻辑具有一定的复杂度，实现了非常丰富的功能
 * 可拓展性强。本项目在开发时充分考虑了模块的松耦合，便于各个模块的独立拓展，可以拆分成微服务，比如搜索服务、查询服务、消息服务等等。
-* 提供完整文档。本项目的开发遵循软件工程规范，基于敏捷开发模型，历时四个周期完成。本项目提供开发时使用的文档，包括项目需求文档、需求分析文档、架构设计文档和测试文档。文档中内容丰富，包括User Case、类图、UML图、架构图等等
+* 提供完整文档。本项目的开发遵循软件工程规范，基于敏捷开发模型，历时四个周期完成。本项目提供开发时使用的文档，包括项目需求文档、需求分析文档、架构设计文档和测试文档。文档中内容丰富，包括User Case、类图、UML图、架构图等等。相关文档详见`doc`目录（Markdown文件中图片网页上可能无法显示，可以克隆至本地阅读，或直接阅读PDF）
 
 本项目主要使用到的技术栈及其版本如下：
 
-`JDK == 17`、`spring-boot == 3.1.4`、`mysql == 8.0.34`、`redis == 7.0.12`、`rabbitmq == 3-management`、`elastic-search == 8.7.0`、`aliyun-oss`。其他技术栈均由Maven版本锁定，详情见`pom.xml`文件。
+| 相关依赖       | 版本         |
+| -------------- | ------------ |
+| JDK            | 17           |
+| SpringBoot     | 3.1.4        |
+| MySQL          | 8.0.34       |
+| Redis          | 7.0.12       |
+| RabbitMQ       | 3-management |
+| Elastic Search | 8.7..0       |
+| AliOSS         | /            |
+
+其他技术栈（例如MyBatis、Spring Security）均由Maven版本锁定，详情见`pom.xml`文件。
 
 ## 二、项目模块架构
 
@@ -59,6 +69,8 @@ EmoVerse(表情宇宙)旨在提供一个表情包平台，用户可以自由地�
 * 安装Elastic Search
 
   安装好Elastic Search之后，需要建立索引库。建议在此基础上安装Kibana进行可视化，在Dev Tools中发送PUT请求，请求路径为`/emoji`，具体的索引库结构，见`emoji-server/src/main/resources/es/index.json`。
+
+  Elastic Search默认不支持中文分词，还需要安装IK分词器，可以在此处下载该插件：https://github.com/medcl/elasticsearch-analysis-ik 注意应下载与Elastic Search相同版本的IK分词器，以免出现版本错误。安装了IK分词器之后，可以配置扩展字典和扩展停止词字典，配置方式详见Git仓库`README.md`
 
 * 注册阿里云OSS服务
 
@@ -222,8 +234,10 @@ nohup java -jar emoverse.jar >log.out 2>&1 &
   docker volumn create es-logs
   ```
 
-  第四步，创建并运行Elastic Search容器
+  创建好数据卷之后，需要将IK分词器上传到`/var/lib/docker/volumes/es-plugins/_data`目录下，配置方式同常规部署
 
+  第四步，创建并运行Elastic Search容器
+  
   ```
   docker run \
   -d \
@@ -241,6 +255,42 @@ nohup java -jar emoverse.jar >log.out 2>&1 &
 
   其中，`ES_JAVA_OPTS`属性可根据具体机器的配置来设置，是否配置`--network es-net`取决于第一步是否创建了网络。
 
-  #### （2)修改配置
+#### （2）修改配置
 
-  
+`yml`配置文件的修改与常规部署相同，与安装的相关依赖保持对应即可。
+
+#### （3）运行项目
+
+本项目已经编写了Dockerfile，可以使用Docker创建镜像并运行容器。
+
+第一步，打包项目代码，对项目父工程`emoticons`运行Maven命令：
+
+```
+mvn package
+```
+
+第二步，创建镜像
+
+将项目文件夹放到某一目录下，使用如下命令创建镜像：
+
+```
+docker build -t emoverse:1.0 .
+```
+
+可以使用以下命令查看镜像是否成功创建：
+
+```
+docker images
+```
+
+第三步，创建容器并运行：
+
+```
+docker run --name emoverse -p 8080:8080 -d emoverse:1.0
+```
+
+此时后端已经成功启动，测试方式有三种：
+
+* 访问http://ipaddress:8080/doc.html，查看接口文档能否正常访问，还可以进行调试。其中`ipaddress`替换为自己的IP地址或域名
+* 利用Postman等工具测试
+* 运行前端，进行前后端联调测试
