@@ -291,6 +291,6 @@ docker run --name emoverse -p 8080:8080 -d emoverse:1.0
 
 此时后端已经成功启动，测试方式有三种：
 
-* 访问http://ipaddress:8080/doc.html，查看接口文档能否正常访问，还可以进行调试。其中`ipaddress`替换为自己的IP地址或域名
+* 访问http://ipaddress:8080/doc.html ，查看接口文档能否正常访问，还可以进行调试。其中`ipaddress`替换为自己的IP地址或域名
 * 利用Postman等工具测试
 * 运行前端，进行前后端联调测试
